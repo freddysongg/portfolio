@@ -60,7 +60,7 @@ export function Projects() {
 
           <TextReveal delay={0.2}>
             <h2 className='mb-4 text-4xl font-bold text-foreground md:text-6xl'>
-              What&#39;s UP?
+              What's UP?
             </h2>
           </TextReveal>
 

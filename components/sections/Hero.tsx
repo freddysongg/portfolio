@@ -41,11 +41,11 @@ export function Hero() {
             <div className='md:col-span-3'>
               <SlideIn delay={0.4}>
                 <p className='mb-8 text-lg leading-relaxed text-muted-foreground md:text-xl'>
-                  Building what&#39;s next in AI and fullstack. I engineer
-                  high-performance systems that deliver, whether it&#39;s
-                  spinning up a RAG system to make search smarter or integrating
-                  an LLM to power a conversation, No fluff, just solid code and
-                  real results.
+                  Building what's next in AI and fullstack. I engineer
+                  high-performance systems that deliver, whether it's spinning
+                  up a RAG system to make search smarter or integrating an LLM
+                  to power a conversation, No fluff, just solid code and real
+                  results.
                 </p>
               </SlideIn>
 

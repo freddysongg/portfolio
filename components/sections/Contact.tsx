@@ -28,9 +28,9 @@ export function Contact() {
 
           <SlideIn delay={0.4}>
             <p className='mb-12 text-xl leading-relaxed text-muted-foreground'>
-              If you&#39;re looking to add some serious AI/ML intelligence to
-              your project, let&#39;s connect. I&#39;m always down to talk about
-              building cool stuff.
+              If you're looking to add some serious AI/ML intelligence to your
+              project, let' connect. I&#39;m always down to talk about building
+              cool stuff.
             </p>
           </SlideIn>
 
