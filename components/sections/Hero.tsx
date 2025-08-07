@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client';
 
 import React from 'react';
@@ -44,7 +45,7 @@ export function Hero() {
                   Building what's next in AI and fullstack. I engineer
                   high-performance systems that deliver, whether it's spinning
                   up a RAG system to make search smarter or integrating an LLM
-                  to power a conversation, No fluff, just solid code and real
+                  to power a conversation. No fluff, just solid code and real
                   results.
                 </p>
               </SlideIn>
@@ -52,7 +53,7 @@ export function Hero() {
               <SlideIn delay={0.6}>
                 <div className='flex flex-col gap-4 sm:flex-row'>
                   <Button size='lg' asChild>
-                    <a href='#work'>View My Work</a>
+                    <a href='#work'>Curious?</a>
                   </Button>
                   <Button variant='outline' size='lg' asChild>
                     <a

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client';
 
 import React from 'react';
@@ -28,9 +29,8 @@ export function Contact() {
 
           <SlideIn delay={0.4}>
             <p className='mb-12 text-xl leading-relaxed text-muted-foreground'>
-              If you're looking to add some serious AI/ML intelligence to your
-              project, let' connect. I&#39;m always down to talk about building
-              cool stuff.
+              If you're looking to add some AI/ML intelligence to your project,
+              let's connect. I'm always down to talk about building cool stuff.
             </p>
           </SlideIn>
 
