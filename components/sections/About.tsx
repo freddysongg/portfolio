@@ -109,7 +109,7 @@ export function About() {
               <SlideIn delay={0.4}>
                 <div className='space-y-6 text-lg leading-relaxed text-muted-foreground'>
                   <p>
-                    I&aposm a fullstack developer who&aposs deep in the world of
+                    I&#39;m a fullstack developer who&#39;s deep in the world of
                     AI/ML. My focus is simple: build smart, production-ready
                     applications where the tech feels intuitive and the
                     experience is seamless.
@@ -144,9 +144,9 @@ export function About() {
                     </div>
                   </div>
                   <p className='text-sm leading-relaxed text-muted-foreground'>
-                    When I&aposm not building agentic systems or the next big
+                    When I&#39;m not building agentic systems or the next big
                     B2B SaaS application -- just jokes here I swear --
-                    you&aposll find me making new mixes at my workstation.
+                    you&#39;ll find me making new mixes at my workstation.
                   </p>
                 </div>
               </SlideIn>

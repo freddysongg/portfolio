@@ -1,9 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import Image from 'next/image';
+
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, ChevronDown } from 'lucide-react';
+
+import Image from 'next/image';
 
 import { TextReveal } from '@/components/animations/TextReveal';
 import { Button } from '@/components/ui/button';
@@ -58,7 +60,7 @@ export function Projects() {
 
           <TextReveal delay={0.2}>
             <h2 className='mb-4 text-4xl font-bold text-foreground md:text-6xl'>
-              What&aposs UP?
+              What&#39;s UP?
             </h2>
           </TextReveal>
 
