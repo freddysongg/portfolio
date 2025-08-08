@@ -14,7 +14,8 @@ export const experiences: Experience[] = [
     company: 'FORTIS Lab at USC',
     position: 'GenAI Research Assistant',
     duration: 'Q3 2025 - Present',
-    description: 'WIP',
+    description:
+      'Designing and implementing a multimodal generative search optimization (GEO) attack pipeline that manipulates product rankings in LLM/VLM-driven recommendation systems through stealthy, ε-bounded perturbations of product images and text.',
     technologies: ['???'],
     achievements: ['???'],
   },
