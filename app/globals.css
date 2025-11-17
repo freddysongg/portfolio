@@ -61,7 +61,6 @@
   }
 
   html {
-    scroll-behavior: smooth;
   }
 
   ::-webkit-scrollbar {
@@ -74,6 +73,16 @@
 
   ::-webkit-scrollbar-thumb {
     @apply rounded-full bg-primary;
+  }
+
+  /* Performance: CSS Containment for isolated sections */
+  section {
+    contain: layout style paint;
+  }
+
+  /* Prevent containment from affecting flex/grid layouts */
+  section > div {
+    contain: none;
   }
 }
 

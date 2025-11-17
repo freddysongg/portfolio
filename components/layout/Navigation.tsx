@@ -1,21 +1,19 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Briefcase, User, Clock, Mail, FileText } from 'lucide-react';
 
 import { LiquidButton } from '@/components/ui/liquid-glass-button';
 import { PERSONAL_INFO } from '@/utils/constants';
 
 export function Navigation() {
-  const [isOpen, setIsOpen] = useState(false);
-
   const menuItems = [
-    { name: 'Projects', href: '#work' },
-    { name: 'About', href: '#about' },
-    { name: 'Experience', href: '#experience' },
-    { name: 'Link', href: '#contact' },
+    { name: 'Projects', href: '#work', icon: Briefcase },
+    { name: 'About', href: '#about', icon: User },
+    { name: 'Experience', href: '#experience', icon: Clock },
+    { name: 'Contact', href: '#contact', icon: Mail },
   ];
 
   return (
@@ -25,7 +23,7 @@ export function Navigation() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className='fixed right-8 top-8 z-50 hidden md:block'
+        className='fixed right-8 top-8 z-50 hidden lg:block'
       >
         <div className='rounded-full border border-border bg-background/80 px-6 py-3 backdrop-blur-md'>
           <div className='flex items-center gap-6'>
@@ -51,72 +49,41 @@ export function Navigation() {
         </div>
       </motion.nav>
 
-      {/* Mobile Navigation Toggle */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+      {/* Mobile Navigation - Compact Icon View */}
+      <motion.nav
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className='fixed right-6 top-6 z-50 md:hidden'
+        className='fixed left-1/2 top-6 z-50 -translate-x-1/2 lg:hidden'
       >
-        <LiquidButton
-          variant='outline'
-          size='sm'
-          onClick={() => setIsOpen(!isOpen)}
-          className='bg-background/80 backdrop-blur-md'
-        >
-          {isOpen ? <X size={20} /> : <Menu size={20} />}
-        </LiquidButton>
-      </motion.div>
-
-      {/* Mobile Navigation Menu */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
-            className='fixed inset-0 z-40 md:hidden'
-          >
-            <div className='flex h-full items-center justify-center bg-background/95 backdrop-blur-md'>
-              <div className='space-y-8 text-center'>
-                {menuItems.map((item, index) => (
-                  <motion.div
-                    key={item.name}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                  >
-                    <a
-                      href={item.href}
-                      onClick={() => setIsOpen(false)}
-                      className='block text-2xl font-medium text-foreground transition-colors hover:text-primary'
-                    >
-                      {item.name}
-                    </a>
-                  </motion.div>
-                ))}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: 0.4 }}
-                  className='pt-4'
+        <div className='rounded-full border border-border bg-background/80 px-4 py-2 backdrop-blur-md'>
+          <div className='flex items-center gap-4'>
+            {menuItems.map(item => {
+              const Icon = item.icon;
+              return (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className='text-muted-foreground transition-colors hover:text-foreground'
+                  aria-label={item.name}
                 >
-                  <LiquidButton variant='default' asChild>
-                    <a
-                      href={PERSONAL_INFO.resumeLink}
-                      target='_blank'
-                      rel='noopener noreferrer'
-                    >
-                      Download Resume
-                    </a>
-                  </LiquidButton>
-                </motion.div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                  <Icon size={18} />
+                </a>
+              );
+            })}
+            <div className='h-4 w-px bg-border' />
+            <a
+              href={PERSONAL_INFO.resumeLink}
+              target='_blank'
+              rel='noopener noreferrer'
+              className='text-muted-foreground transition-colors hover:text-foreground'
+              aria-label='Resume'
+            >
+              <FileText size={18} />
+            </a>
+          </div>
+        </div>
+      </motion.nav>
     </>
   );
 }

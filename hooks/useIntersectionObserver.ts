@@ -10,7 +10,9 @@ export function useIntersectionObserver(threshold = 0.1, rootMargin = '0px') {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsVisible(entry.isIntersecting);
+        if (entry.isIntersecting && !isVisible) {
+          setIsVisible(true);
+        }
       },
       { threshold, rootMargin }
     );
@@ -20,7 +22,7 @@ export function useIntersectionObserver(threshold = 0.1, rootMargin = '0px') {
     return () => {
       observer.unobserve(element);
     };
-  }, [threshold, rootMargin]);
+  }, [threshold, rootMargin, isVisible]);
 
   return [ref, isVisible] as const;
 }

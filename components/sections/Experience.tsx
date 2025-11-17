@@ -71,7 +71,7 @@ export function Experience() {
 
   return (
     <section id='experience' className='py-20'>
-      <div className='container mx-auto px-4'>
+      <div className='container mx-auto px-6'>
         <div className='mx-auto max-w-7xl'>
           <TextReveal>
             <div className='mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground'>

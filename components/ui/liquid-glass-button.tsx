@@ -82,12 +82,7 @@ function LiquidButton({
           currentGlass.darkShadow
         )}
       />
-      <div
-        className='pointer-events-none absolute left-0 top-0 isolate -z-10 h-full w-full overflow-hidden rounded-full'
-        style={{ backdropFilter: 'url("#container-glass")' }}
-      />
       <span className='relative z-10 flex items-center gap-2'>{children}</span>
-      <GlassFilter />
     </>
   );
 
@@ -116,14 +111,9 @@ function LiquidButton({
                 currentGlass.darkShadow
               )}
             />
-            <div
-              className='pointer-events-none absolute left-0 top-0 isolate -z-10 h-full w-full overflow-hidden rounded-full'
-              style={{ backdropFilter: 'url("#container-glass")' }}
-            />
             <span className='relative z-10 flex items-center gap-2'>
               {child.props.children}
             </span>
-            <GlassFilter />
           </>
         )}
       </Slot>
@@ -145,54 +135,5 @@ function LiquidButton({
 }
 
 LiquidButton.displayName = 'LiquidButton';
-
-function GlassFilter() {
-  return (
-    <svg className='hidden'>
-      <defs>
-        <filter
-          id='container-glass'
-          x='0%'
-          y='0%'
-          width='100%'
-          height='100%'
-          colorInterpolationFilters='sRGB'
-        >
-          {/* Generate turbulent noise for distortion */}
-          <feTurbulence
-            type='fractalNoise'
-            baseFrequency='0.05 0.05'
-            numOctaves='1'
-            seed='1'
-            result='turbulence'
-          />
-
-          {/* Blur the turbulence pattern slightly */}
-          <feGaussianBlur
-            in='turbulence'
-            stdDeviation='2'
-            result='blurredNoise'
-          />
-
-          {/* Displace the source graphic with the noise */}
-          <feDisplacementMap
-            in='SourceGraphic'
-            in2='blurredNoise'
-            scale='70'
-            xChannelSelector='R'
-            yChannelSelector='B'
-            result='displaced'
-          />
-
-          {/* Apply overall blur on the final result */}
-          <feGaussianBlur in='displaced' stdDeviation='4' result='finalBlur' />
-
-          {/* Output the result */}
-          <feComposite in='finalBlur' in2='finalBlur' operator='over' />
-        </filter>
-      </defs>
-    </svg>
-  );
-}
 
 export { LiquidButton, liquidbuttonVariants };

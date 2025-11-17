@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 
 import type { Experience } from '@/data/experience';
 
@@ -32,11 +32,17 @@ export const YearTimeline = ({ yearGroups }: YearTimelineProps) => {
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start 10%', 'end 50%'],
+    offset: ['start 10%', 'end 85%'],
   });
 
-  const heightTransform = useTransform(scrollYProgress, [0, 1], [0, height]);
-  const opacityTransform = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
+  const heightTransform = useSpring(
+    useTransform(scrollYProgress, [0, 1], [0, height]),
+    { stiffness: 100, damping: 30, restDelta: 0.001 }
+  );
+  const opacityTransform = useSpring(
+    useTransform(scrollYProgress, [0, 0.1], [0, 1]),
+    { stiffness: 100, damping: 30, restDelta: 0.001 }
+  );
 
   return (
     <div
@@ -58,7 +64,7 @@ export const YearTimeline = ({ yearGroups }: YearTimelineProps) => {
                 <div className='absolute left-3 flex h-10 w-10 items-center justify-center rounded-full bg-background md:left-3'>
                   <div className='h-4 w-4 rounded-full border border-border bg-muted p-2' />
                 </div>
-                <h3 className='text-2xl font-bold text-muted-foreground md:pl-20 md:text-5xl'>
+                <h3 className='pl-16 text-2xl font-bold text-muted-foreground md:pl-20 md:text-5xl'>
                   {yearGroup.year}
                 </h3>
               </div>
@@ -118,6 +124,7 @@ export const YearTimeline = ({ yearGroups }: YearTimelineProps) => {
             style={{
               height: heightTransform,
               opacity: opacityTransform,
+              willChange: 'height, opacity',
             }}
             className='absolute inset-x-0 top-0 w-[2px] rounded-full bg-gradient-to-t from-primary from-[0%] via-primary/50 via-[10%] to-transparent'
           />

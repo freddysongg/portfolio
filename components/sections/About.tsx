@@ -104,7 +104,7 @@ export function About() {
 
   return (
     <section id='about' className='bg-muted/30 py-20'>
-      <div className='container mx-auto px-4'>
+      <div className='container mx-auto px-6'>
         <div className='mx-auto max-w-6xl'>
           <div className='grid items-start gap-16 lg:grid-cols-2'>
             <div>
@@ -207,12 +207,12 @@ export function About() {
                         duration: 0.2,
                         delay: index * 0.05,
                         type: 'spring',
-                        stiffness: 200,
+                        stiffness: 100,
                       }}
                       whileHover={{
                         scale: 1.02,
                         y: -2,
-                        transition: { duration: 0.2 },
+                        transition: { duration: 0.2, ease: 'easeOut' },
                       }}
                       className='group cursor-pointer rounded-lg border border-border bg-background p-4 transition-all duration-200 hover:border-primary/50 hover:shadow-sm'
                     >

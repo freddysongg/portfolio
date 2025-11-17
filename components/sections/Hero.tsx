@@ -15,7 +15,7 @@ import { PERSONAL_INFO } from '@/utils/constants';
 export function Hero() {
   return (
     <AuroraBackground className='py-20'>
-      <div className='container relative z-10 mx-auto px-4'>
+      <div className='container relative z-10 mx-auto px-6'>
         <div className='mx-auto max-w-6xl'>
           <TextReveal>
             <div className='mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground'></div>
@@ -42,11 +42,16 @@ export function Hero() {
               </SlideIn>
 
               <SlideIn delay={0.6}>
-                <div className='flex flex-col gap-4 sm:flex-row'>
-                  <LiquidButton size='lg' asChild>
+                <div className='flex flex-col gap-3 sm:flex-row sm:gap-4'>
+                  <LiquidButton size='lg' asChild className='w-full sm:w-auto'>
                     <a href='#work'>Curious?</a>
                   </LiquidButton>
-                  <LiquidButton variant='outline' size='lg' asChild>
+                  <LiquidButton
+                    variant='outline'
+                    size='lg'
+                    asChild
+                    className='w-full sm:w-auto'
+                  >
                     <a
                       href={PERSONAL_INFO.resumeLink}
                       target='_blank'
@@ -68,11 +73,13 @@ export function Hero() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 1 }}
         className='absolute bottom-8 left-1/2 -translate-x-1/2 transform'
+        style={{ willChange: 'opacity' }}
       >
         <motion.div
-          animate={{ y: [0, 10, 0] }}
+          animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
           className='flex flex-col items-center gap-2 text-muted-foreground'
+          style={{ willChange: 'transform' }}
         >
           <div className='font-mono text-xs uppercase tracking-wider'>
             SCROLL

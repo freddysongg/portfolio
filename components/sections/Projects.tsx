@@ -77,7 +77,7 @@ export function Projects() {
 
   return (
     <section id='work' className='py-20'>
-      <div className='container mx-auto px-4'>
+      <div className='container mx-auto px-6'>
         <div className='mx-auto max-w-6xl'>
           <TextReveal>
             <div className='mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground'>
@@ -122,16 +122,18 @@ export function Projects() {
                     initial={showAll && index >= 4 ? 'hidden' : false}
                     animate='visible'
                     exit='hidden'
-                    layout
                     className={`${layout.colSpan} ${layout.marginTop}`}
                   >
-                    <Card className='group h-full overflow-hidden border-0 bg-transparent'>
+                    <Card
+                      className='group h-full overflow-hidden border-0 bg-transparent'
+                      style={{ willChange: 'transform' }}
+                    >
                       <div
                         className='relative aspect-video overflow-hidden rounded-t-xl'
                         style={{
                           background: `rgba(${colors.rgb}, 0.15)`,
-                          backdropFilter: 'blur(14px)',
-                          WebkitBackdropFilter: 'blur(14px)',
+                          backdropFilter: 'blur(10px)',
+                          WebkitBackdropFilter: 'blur(10px)',
                           border: `1px solid rgba(${colors.rgb}, 0.3)`,
                           boxShadow: `
                             0 8px 32px rgba(0, 0, 0, 0.1),

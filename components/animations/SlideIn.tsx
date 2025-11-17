@@ -46,6 +46,8 @@ export function SlideIn({
       initial='hidden'
       variants={variants}
       className={className}
+      style={{ willChange: 'transform, opacity' }}
+      viewport={{ once: true }}
     >
       {children}
     </motion.div>
