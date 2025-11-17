@@ -6,11 +6,9 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, ChevronDown } from 'lucide-react';
 
-import Image from 'next/image';
-
 import { TextReveal } from '@/components/animations/TextReveal';
-import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { LiquidButton } from '@/components/ui/liquid-glass-button';
 import { projects } from '@/data/projects';
 import { ANIMATION_VARIANTS } from '@/utils/constants';
 
@@ -23,6 +21,34 @@ export function Projects() {
     ? featuredProjects
     : featuredProjects.slice(0, 4);
   const hasMoreProjects = featuredProjects.length > 4;
+
+  // Glassmorphism accent colors for each project - lighter pastel variants
+  const accentColors = [
+    {
+      name: 'blue',
+      rgb: '191, 219, 254',
+    }, // Lighter baby blue
+    {
+      name: 'pink',
+      rgb: '251, 207, 232',
+    }, // Lighter pink
+    {
+      name: 'purple',
+      rgb: '221, 214, 254',
+    }, // Lighter lavender
+    {
+      name: 'emerald',
+      rgb: '167, 243, 208',
+    }, // Lighter mint
+    {
+      name: 'amber',
+      rgb: '254, 240, 138',
+    }, // Lighter peach
+    {
+      name: 'cyan',
+      rgb: '207, 250, 254',
+    }, // Lighter cyan
+  ];
 
   // Dynamic layout function to create asymmetric patterns
   const getProjectLayout = (index: number, _total: number) => {
@@ -55,13 +81,13 @@ export function Projects() {
         <div className='mx-auto max-w-6xl'>
           <TextReveal>
             <div className='mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground'>
-              FEATURED WORK
+              PROJECTS
             </div>
           </TextReveal>
 
           <TextReveal delay={0.2}>
             <h2 className='mb-4 text-4xl font-bold text-foreground md:text-6xl'>
-              What's UP
+              What I've Built
             </h2>
           </TextReveal>
 
@@ -87,6 +113,8 @@ export function Projects() {
                   displayedProjects.length
                 );
 
+                const colors = accentColors[index % accentColors.length];
+
                 return (
                   <motion.div
                     key={project.id}
@@ -97,26 +125,140 @@ export function Projects() {
                     layout
                     className={`${layout.colSpan} ${layout.marginTop}`}
                   >
-                    <Card className='group h-full overflow-hidden'>
-                      <div className='relative aspect-video overflow-hidden bg-muted'>
-                        <Image
-                          src={
-                            project.image ||
-                            '/placeholder.svg?height=400&width=600&query=project showcase'
-                          }
-                          alt={project.title}
-                          width={600}
-                          height={400}
-                          className='h-full w-full object-cover transition-transform duration-500 group-hover:scale-105'
-                          priority={index < 2}
+                    <Card className='group h-full overflow-hidden border-0 bg-transparent'>
+                      <div
+                        className='relative aspect-video overflow-hidden rounded-t-xl'
+                        style={{
+                          background: `rgba(${colors.rgb}, 0.15)`,
+                          backdropFilter: 'blur(14px)',
+                          WebkitBackdropFilter: 'blur(14px)',
+                          border: `1px solid rgba(${colors.rgb}, 0.3)`,
+                          boxShadow: `
+                            0 8px 32px rgba(0, 0, 0, 0.1),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.5),
+                            inset 0 -1px 0 rgba(255, 255, 255, 0.1)
+                          `,
+                          transition: 'all 0.5s ease',
+                        }}
+                        onMouseEnter={e => {
+                          e.currentTarget.style.boxShadow = `
+                            0 8px 32px rgba(${colors.rgb}, 0.3),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.5),
+                            inset 0 -1px 0 rgba(255, 255, 255, 0.1)
+                          `;
+                        }}
+                        onMouseLeave={e => {
+                          e.currentTarget.style.boxShadow = `
+                            0 8px 32px rgba(0, 0, 0, 0.1),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.5),
+                            inset 0 -1px 0 rgba(255, 255, 255, 0.1)
+                          `;
+                        }}
+                      >
+                        {/* Top edge highlight */}
+                        <div
+                          className='absolute left-0 right-0 top-0 h-px'
+                          style={{
+                            background: `linear-gradient(
+                              90deg,
+                              transparent,
+                              rgba(255, 255, 255, 0.8),
+                              transparent
+                            )`,
+                          }}
                         />
-                        <div className='absolute inset-0 bg-primary/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100' />
+
+                        {/* Left edge highlight */}
+                        <div
+                          className='absolute left-0 top-0 h-full w-px'
+                          style={{
+                            background: `linear-gradient(
+                              180deg,
+                              rgba(255, 255, 255, 0.8),
+                              transparent,
+                              rgba(255, 255, 255, 0.3)
+                            )`,
+                          }}
+                        />
+
+                        <div className='relative h-full p-8'>
+                          {/* Abstract geometric shapes */}
+                          <div className='absolute inset-0 overflow-hidden'>
+                            {/* Animated gradient orbs */}
+                            <div
+                              className='absolute -right-8 -top-8 h-32 w-32 rounded-full opacity-40 blur-2xl transition-all duration-700 group-hover:scale-125'
+                              style={{
+                                background: `radial-gradient(circle, rgba(${colors.rgb}, 0.6), transparent)`,
+                              }}
+                            />
+                            <div
+                              className='absolute -bottom-4 -left-4 h-24 w-24 rounded-full opacity-30 blur-xl transition-all duration-700 group-hover:scale-110'
+                              style={{
+                                background: `radial-gradient(circle, rgba(${colors.rgb}, 0.5), transparent)`,
+                              }}
+                            />
+
+                            {/* Abstract lines */}
+                            <svg
+                              className='absolute bottom-0 left-0 h-full w-full opacity-20'
+                              viewBox='0 0 200 200'
+                              xmlns='http://www.w3.org/2000/svg'
+                            >
+                              <path
+                                d={`M0,100 Q50,${50 + index * 10} 100,100 T200,100`}
+                                fill='none'
+                                stroke={`rgba(${colors.rgb}, 0.4)`}
+                                strokeWidth='2'
+                                className='transition-all duration-700 group-hover:opacity-60'
+                              />
+                              <circle
+                                cx={150 - index * 10}
+                                cy={50 + index * 15}
+                                r='3'
+                                fill={`rgba(${colors.rgb}, 0.6)`}
+                                className='group-hover:r-5 transition-all duration-700'
+                              />
+                              <circle
+                                cx={50 + index * 15}
+                                cy={150 - index * 10}
+                                r='2'
+                                fill={`rgba(${colors.rgb}, 0.5)`}
+                              />
+                            </svg>
+
+                            {/* Floating particles */}
+                            <div
+                              className='absolute right-12 top-12 h-1 w-1 rounded-full opacity-60'
+                              style={{
+                                background: `rgba(${colors.rgb}, 0.8)`,
+                                boxShadow: `0 0 10px rgba(${colors.rgb}, 0.6)`,
+                              }}
+                            />
+                            <div
+                              className='absolute bottom-16 left-16 h-1.5 w-1.5 rounded-full opacity-50'
+                              style={{
+                                background: `rgba(${colors.rgb}, 0.7)`,
+                                boxShadow: `0 0 8px rgba(${colors.rgb}, 0.5)`,
+                              }}
+                            />
+                          </div>
+
+                          {/* Small category badge */}
+                          <div className='relative z-10'>
+                            <div
+                              className='inline-block rounded-full px-3 py-1 font-mono text-xs uppercase tracking-wider backdrop-blur-sm'
+                              style={{
+                                background: `rgba(${colors.rgb}, 0.2)`,
+                                border: `1px solid rgba(${colors.rgb}, 0.3)`,
+                              }}
+                            >
+                              {project.category}
+                            </div>
+                          </div>
+                        </div>
                       </div>
 
-                      <div className='p-6'>
-                        <div className='mb-2 font-mono text-xs uppercase tracking-wider text-muted-foreground'>
-                          {project.category}
-                        </div>
+                      <div className='bg-background/95 p-6 backdrop-blur-sm'>
                         <h3 className='mb-3 text-xl font-bold text-foreground'>
                           {project.title}
                         </h3>
@@ -137,40 +279,40 @@ export function Projects() {
 
                         <div className='flex gap-3'>
                           {project.link && project.id == '1' && (
-                            <Button variant='outline' size='sm' asChild>
+                            <LiquidButton variant='outline' size='sm' asChild>
                               <a
                                 href={project.link}
                                 target='_blank'
                                 rel='noopener noreferrer'
                               >
-                                <ExternalLink size={16} className='mr-2' />
+                                <ExternalLink size={16} />
                                 Visit
                               </a>
-                            </Button>
+                            </LiquidButton>
                           )}
                           {project.link && project.id != '1' && (
-                            <Button variant='outline' size='sm' asChild>
+                            <LiquidButton variant='outline' size='sm' asChild>
                               <a
                                 href={project.link}
                                 target='_blank'
                                 rel='noopener noreferrer'
                               >
-                                <ExternalLink size={16} className='mr-2' />
+                                <ExternalLink size={16} />
                                 Link
                               </a>
-                            </Button>
+                            </LiquidButton>
                           )}
                           {project.github && (
-                            <Button variant='ghost' size='sm' asChild>
+                            <LiquidButton variant='outline' size='sm' asChild>
                               <a
                                 href={project.github}
                                 target='_blank'
                                 rel='noopener noreferrer'
                               >
-                                <Github size={16} className='mr-2' />
+                                <Github size={16} />
                                 Code
                               </a>
-                            </Button>
+                            </LiquidButton>
                           )}
                         </div>
                       </div>
@@ -191,7 +333,7 @@ export function Projects() {
               className='mt-16 text-center'
             >
               {!showAll ? (
-                <Button
+                <LiquidButton
                   variant='outline'
                   size='lg'
                   onClick={handleViewMore}
@@ -205,10 +347,10 @@ export function Projects() {
                     size={16}
                     className='ml-2 transition-transform group-hover:translate-y-1'
                   />
-                </Button>
+                </LiquidButton>
               ) : (
-                <Button
-                  variant='ghost'
+                <LiquidButton
+                  variant='outline'
                   size='lg'
                   onClick={handleViewLess}
                   className='group'
@@ -218,7 +360,7 @@ export function Projects() {
                     size={16}
                     className='ml-2 rotate-180 transition-transform group-hover:-translate-y-1'
                   />
-                </Button>
+                </LiquidButton>
               )}
             </motion.div>
           )}

@@ -305,3 +305,5 @@ local/
 test-results/
 playwright-report/
 playwright/.cache/
+
+*.md

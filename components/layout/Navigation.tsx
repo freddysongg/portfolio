@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 
-import { Button } from '@/components/ui/button';
+import { LiquidButton } from '@/components/ui/liquid-glass-button';
 import { PERSONAL_INFO } from '@/utils/constants';
 
 export function Navigation() {
@@ -38,7 +38,7 @@ export function Navigation() {
                 {item.name}
               </a>
             ))}
-            <Button variant='default' size='sm' asChild>
+            <LiquidButton variant='default' size='sm' asChild>
               <a
                 href={PERSONAL_INFO.resumeLink}
                 target='_blank'
@@ -46,7 +46,7 @@ export function Navigation() {
               >
                 Resume
               </a>
-            </Button>
+            </LiquidButton>
           </div>
         </div>
       </motion.nav>
@@ -58,14 +58,14 @@ export function Navigation() {
         transition={{ duration: 0.6, delay: 0.2 }}
         className='fixed right-6 top-6 z-50 md:hidden'
       >
-        <Button
+        <LiquidButton
           variant='outline'
           size='sm'
           onClick={() => setIsOpen(!isOpen)}
           className='bg-background/80 backdrop-blur-md'
         >
           {isOpen ? <X size={20} /> : <Menu size={20} />}
-        </Button>
+        </LiquidButton>
       </motion.div>
 
       {/* Mobile Navigation Menu */}
@@ -102,7 +102,7 @@ export function Navigation() {
                   transition={{ duration: 0.3, delay: 0.4 }}
                   className='pt-4'
                 >
-                  <Button variant='default' asChild>
+                  <LiquidButton variant='default' asChild>
                     <a
                       href={PERSONAL_INFO.resumeLink}
                       target='_blank'
@@ -110,7 +110,7 @@ export function Navigation() {
                     >
                       Download Resume
                     </a>
-                  </Button>
+                  </LiquidButton>
                 </motion.div>
               </div>
             </div>

@@ -29,18 +29,21 @@ npm run typecheck       # Run TypeScript type checking
 ### Design System & Theme
 
 **CSS Variables System**: The project uses a CSS custom properties-based theming system defined in `app/globals.css`:
+
 - Light/dark mode via CSS classes (`.dark`)
 - All colors use HSL format: `hsl(var(--variable-name))`
 - Semantic color tokens: `--background`, `--foreground`, `--primary`, `--secondary`, `--muted`, `--accent`, `--destructive`, `--border`, `--input`, `--ring`
 - Border radius controlled via `--radius` variable (default: 0.5rem)
 
 **Tailwind Configuration** (`tailwind.config.js`):
+
 - Container: centered, 2rem padding, max-width 1400px at 2xl breakpoint
 - Extended theme integrates with CSS variables
 - Uses `tailwindcss-animate` plugin for animations
 - Custom scrollbar styling in globals.css
 
 **Typography**:
+
 - Primary font: Geist Sans
 - Monospace font: Geist Mono
 - Both loaded via `geist` package in `app/layout.tsx`
@@ -48,6 +51,7 @@ npm run typecheck       # Run TypeScript type checking
 ### Component Architecture
 
 **shadcn/ui Integration** (`components.json`):
+
 - Base style: "default"
 - Uses React Server Components (RSC)
 - Icon library: Lucide React
@@ -55,6 +59,7 @@ npm run typecheck       # Run TypeScript type checking
 - Base color: neutral with CSS variables enabled
 
 **Component Structure**:
+
 ```
 components/
 ├── animations/         # Reusable animation wrappers
@@ -68,6 +73,7 @@ components/
 ```
 
 **Import Aliases** (tsconfig.json):
+
 - `@/*` → Root directory
 - `@/components` → components/
 - `@/lib` → lib/
@@ -77,17 +83,20 @@ components/
 ### Animation System
 
 **Framer Motion Integration**:
+
 - All client components use `'use client'` directive
 - Intersection Observer-based animations via `useIntersectionObserver` hook
 - Animation variants stored in `utils/constants.ts` under `ANIMATION_VARIANTS`
 
 **Animation Patterns**:
+
 1. **TextReveal**: Opacity 0→1, translateY 100px→0, 0.8s duration
 2. **SlideIn**: Opacity 0→1, directional slide (60px offset), 0.8s duration
 3. Both use `threshold: 0.1` for early triggering
 4. Both support `delay` prop for staggered animations
 
 **Custom Hook** (`hooks/useIntersectionObserver.ts`):
+
 - Returns `[ref, isVisible]` tuple
 - Configurable threshold and rootMargin
 - Sets `isVisible` state when element enters viewport
@@ -95,6 +104,7 @@ components/
 ### Page Structure
 
 **Single-page Layout** (`app/page.tsx`):
+
 ```tsx
 <Navigation />  // Fixed position, responsive
 <main>
@@ -108,6 +118,7 @@ components/
 ```
 
 **Background Pattern** (Hero section):
+
 - Grid background using CSS gradients
 - Responsive width: 65% of viewport on right side
 - Radial gradient mask for fade effect
@@ -116,27 +127,32 @@ components/
 ### Data Management
 
 **Constants** (`utils/constants.ts`):
+
 - `PERSONAL_INFO`: Name, email, social links, resume link
 - `ANIMATION_VARIANTS`: Predefined Framer Motion variants
 
 **Content Data** (`data/`):
+
 - `projects.ts`: Project information and metadata
 - `experience.ts`: Work experience and timeline data
 
 ### Styling Patterns
 
 **Utility Function** (`lib/utils.ts`):
+
 ```tsx
-cn(...inputs) // Merges Tailwind classes with clsx and tailwind-merge
+cn(...inputs); // Merges Tailwind classes with clsx and tailwind-merge
 ```
 
 **Common Patterns**:
+
 - Backdrop blur: `backdrop-blur-md` with `bg-background/80`
 - Responsive design: Mobile-first with `md:` and `lg:` breakpoints
 - Dark mode: Use semantic color tokens (automatically switch)
 - Animations: Wrap content in `<TextReveal>` or `<SlideIn>` components
 
 **Button Variants** (via class-variance-authority):
+
 - Variants: default, destructive, outline, secondary, ghost, link
 - Sizes: default (h-10), sm (h-9), lg (h-11), icon (h-10 w-10)
 - All buttons support `asChild` prop for polymorphic rendering
@@ -144,12 +160,14 @@ cn(...inputs) // Merges Tailwind classes with clsx and tailwind-merge
 ### Navigation Behavior
 
 **Desktop Navigation**:
+
 - Fixed position: `right-8 top-8`
 - Pill-shaped container with backdrop blur
 - Horizontal menu items + Resume button
 - Smooth scroll to sections via anchor links
 
 **Mobile Navigation**:
+
 - Toggle button: `right-6 top-6`
 - Full-screen overlay with centered menu
 - AnimatePresence for enter/exit animations
@@ -167,12 +185,14 @@ cn(...inputs) // Merges Tailwind classes with clsx and tailwind-merge
 ## Adding New Components
 
 When adding new UI components:
+
 1. Use shadcn CLI: `npx shadcn@latest add <component-name>`
 2. Components auto-install to `components/ui/`
 3. Import using alias: `import { Component } from '@/components/ui/component'`
 4. Apply theme colors via semantic tokens (e.g., `bg-background`, `text-foreground`)
 
 When creating section components:
+
 1. Add to `components/sections/`
 2. Wrap animated elements in `<TextReveal>` or `<SlideIn>`
 3. Use `'use client'` if using state/effects/animations

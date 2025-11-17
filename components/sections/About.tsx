@@ -7,77 +7,90 @@ import { motion } from 'framer-motion';
 
 import { SlideIn } from '@/components/animations/SlideIn';
 import { TextReveal } from '@/components/animations/TextReveal';
+import { LiquidButton } from '@/components/ui/liquid-glass-button';
 
 export function About() {
   const [activeCategory, setActiveCategory] = useState('languages');
 
   const skillCategories = {
     languages: [
-      'Python',
-      'JavaScript',
-      'TypeScript',
-      'Java',
+      'C++',
+      'C#',
+      'Go',
       'HTML/CSS',
-      'SQL',
+      'Java',
+      'JavaScript',
+      'Python',
       'R',
-      'GraphQL',
+      'SQL',
+      'TypeScript',
     ],
     frameworks: [
-      'NumPy',
-      'Keras',
-      'TensorFlow',
-      'PyTorch',
-      'Scikit-Learn',
-      'Pandas',
-      'React',
-      'Node.js',
-      'Express.js',
-      'Astro',
-      'Mastra',
-      'Fastify',
-      'Next.js',
-      'Flask',
-      'LangChain',
-      'Jest',
-      'Hugging Face Transformers',
-      'WebSockets',
       'Drizzle ORM',
+      'Express.js',
+      'Fastify',
+      'Flask',
+      'Hugging Face Transformers',
+      'Jest',
+      'Keras',
+      'LangChain',
+      'Next.js',
+      'Node.js',
+      'NumPy',
+      'Pandas',
+      'PyTorch',
+      'React',
+      'Scikit-Learn',
+      'Svelte',
+      'TensorFlow',
+      'WebSockets',
     ],
     tools: [
-      'Git',
-      'AWS (ECS, EC2, EKS, RDS, SQS)',
-      'MongoDB',
-      'Firebase',
-      'PostgreSQL',
+      'ArgoCD',
+      'AWS (Aurora, EC2, ECS, EKS, OpenSearch)',
+      'Datadog',
       'Docker',
-      'Google Cloud',
+      'Elasticsearch',
+      'Firebase',
+      'GCP',
+      'Grafana',
       'Hugging Face',
-      'RESTful API',
-      'Vercel',
-      'DataGrip',
       'Jira',
-      'Supabase',
       'Kubernetes',
-      'Redis',
-      'Kafka',
-      'Svelte',
+      'LangChain',
+      'LangFuse',
       'MLFlow',
+      'MongoDB',
+      'Neo4j',
+      'OCI',
+      'Pinecone',
+      'PostgreSQL',
+      'Prometheus',
+      'Qdrant',
+      'Redis',
+      'RESTful API',
       'TensorBoard',
       'Terraform',
+      'Vault',
     ],
     ml: [
-      'Retrieval-Augmented Generation',
-      'Semantic Search',
-      'Natural Language Processing',
-      'Generative AI',
+      'Agent-to-Agent (A2A)',
       'Bayesian Optimization',
-      'Hyperparameter Tuning',
-      'Feature Engineering',
       'CNNs',
+      'CUDA',
+      'Feature Engineering',
+      'Generative AI',
+      'Hyperparameter Tuning',
+      'LLMs (RoBERTa)',
+      'Model Context Protocol (MCPs)',
+      'MLR',
+      'Natural Language Processing (NLP)',
+      'NVIDIA NeMo',
+      'Retrieval-Augmented Generation (RAG)',
       'RNNs (LSTM)',
       'Time Series Models',
-      'LLMs (RoBERTa)',
-      'MLR',
+      'Vector Databases',
+      'vLLM',
       'XGBoost',
     ],
   };
@@ -110,10 +123,10 @@ export function About() {
               <SlideIn delay={0.4}>
                 <div className='space-y-6 text-lg leading-relaxed text-muted-foreground'>
                   <p>
-                    I&#39;m a fullstack developer who's deep in the world of
-                    AI/ML. My focus is simple: build smart, production-ready
-                    applications where the tech feels intuitive and the
-                    experience is seamless.
+                    I&#39;m a developer who's deep in the world of AI/ML. My
+                    focus is simple: build smart, production-ready applications
+                    where the tech feels intuitive and the experience is
+                    seamless.
                   </p>
                   <p>
                     From architecting RAG systems that process millions of
@@ -156,19 +169,23 @@ export function About() {
             <div>
               <SlideIn delay={0.8} direction='right'>
                 {/* Category Tabs */}
-                <div className='mb-8 flex flex-wrap gap-2 rounded-lg bg-muted/50 p-1'>
+                <div className='mb-8 flex flex-wrap gap-3'>
                   {Object.keys(skillCategories).map(category => (
-                    <button
+                    <LiquidButton
                       key={category}
                       onClick={() => setActiveCategory(category)}
-                      className={`rounded-md px-4 py-2 text-sm font-medium transition-all duration-200 ${
+                      size='sm'
+                      variant={
+                        activeCategory === category ? 'default' : 'secondary'
+                      }
+                      className={`${
                         activeCategory === category
-                          ? 'bg-primary text-primary-foreground shadow-sm'
-                          : 'text-muted-foreground hover:bg-background/50 hover:text-foreground'
+                          ? 'bg-foreground text-background'
+                          : 'bg-background/40 text-foreground'
                       }`}
                     >
                       {categoryLabels[category as keyof typeof categoryLabels]}
-                    </button>
+                    </LiquidButton>
                   ))}
                 </div>
                 {/* Skills Grid */}

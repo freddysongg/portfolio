@@ -1,16 +1,78 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 
-import { SlideIn } from '@/components/animations/SlideIn';
 import { TextReveal } from '@/components/animations/TextReveal';
-import { experiences } from '@/data/experience';
+import { YearTimeline } from '@/components/ui/year-timeline';
+import { experiences, type Experience } from '@/data/experience';
+
+interface YearGroup {
+  year: number;
+  experiences: Array<{
+    experience: Experience;
+    quarterOffset: number;
+  }>;
+}
+
+function parseStartDate(duration: string): { year: number; month: number } {
+  const monthMap: Record<string, number> = {
+    JAN: 1,
+    FEB: 2,
+    MAR: 3,
+    APR: 4,
+    MAY: 5,
+    JUN: 6,
+    JUL: 7,
+    AUG: 8,
+    SEP: 9,
+    SEPT: 9,
+    OCT: 10,
+    NOV: 11,
+    DEC: 12,
+  };
+
+  const parts = duration.split(' - ')[0].split(' ');
+  const monthStr = parts[0].toUpperCase();
+  const yearStr = parts[1];
+
+  return {
+    month: monthMap[monthStr] || 1,
+    year: parseInt(yearStr, 10),
+  };
+}
+
+function getQuarterOffset(month: number): number {
+  if (month >= 1 && month <= 3) return 75;
+  if (month >= 4 && month <= 6) return 50;
+  if (month >= 7 && month <= 9) return 25;
+  return 0;
+}
 
 export function Experience() {
+  const yearGroups: YearGroup[] = useMemo(() => {
+    const grouped = new Map<number, YearGroup>();
+
+    experiences.forEach(experience => {
+      const { year, month } = parseStartDate(experience.duration);
+      const quarterOffset = getQuarterOffset(month);
+
+      if (!grouped.has(year)) {
+        grouped.set(year, { year, experiences: [] });
+      }
+
+      grouped.get(year)!.experiences.push({
+        experience,
+        quarterOffset,
+      });
+    });
+
+    return Array.from(grouped.values()).sort((a, b) => b.year - a.year);
+  }, []);
+
   return (
     <section id='experience' className='py-20'>
       <div className='container mx-auto px-4'>
-        <div className='mx-auto max-w-4xl'>
+        <div className='mx-auto max-w-7xl'>
           <TextReveal>
             <div className='mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground'>
               EXPERIENCE
@@ -18,63 +80,19 @@ export function Experience() {
           </TextReveal>
 
           <TextReveal delay={0.2}>
-            <h2 className='mb-16 text-4xl font-bold text-foreground md:text-5xl'>
+            <h2 className='mb-4 text-4xl font-bold text-foreground md:text-5xl'>
               Professional Journey
             </h2>
           </TextReveal>
 
-          <div className='space-y-12'>
-            {experiences.map((experience, index) => (
-              <SlideIn key={experience.id} delay={0.3 + index * 0.1}>
-                <div className='relative border-l-2 border-primary/20 pl-8'>
-                  <div className='absolute -left-2 top-0 h-4 w-4 rounded-full bg-primary'></div>
+          <TextReveal delay={0.3}>
+            <p className='mb-16 max-w-2xl text-base text-muted-foreground md:text-lg'>
+              A timeline of my professional experiences, from research to
+              production engineering.
+            </p>
+          </TextReveal>
 
-                  <div className='grid gap-6 md:grid-cols-3'>
-                    <div>
-                      <h3 className='mb-2 text-xl font-bold text-foreground'>
-                        {experience.position}
-                      </h3>
-                      <div className='mb-2 font-medium text-primary'>
-                        {experience.company}
-                      </div>
-                      <div className='font-mono text-sm text-muted-foreground'>
-                        {experience.duration}
-                      </div>
-                    </div>
-
-                    <div className='md:col-span-2'>
-                      <p className='mb-4 leading-relaxed text-muted-foreground'>
-                        {experience.description}
-                      </p>
-
-                      <div className='mb-4 flex flex-wrap gap-2'>
-                        {experience.technologies.map(tech => (
-                          <span
-                            key={tech}
-                            className='rounded-full bg-muted px-3 py-1 text-sm text-muted-foreground'
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-
-                      <ul className='space-y-2'>
-                        {experience.achievements.map((achievement, i) => (
-                          <li
-                            key={i}
-                            className='flex items-start text-sm text-muted-foreground'
-                          >
-                            <span className='mr-2 text-primary'>•</span>
-                            {achievement}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </SlideIn>
-            ))}
-          </div>
+          <YearTimeline yearGroups={yearGroups} />
         </div>
       </div>
     </section>

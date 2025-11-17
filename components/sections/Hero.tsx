@@ -8,22 +8,13 @@ import { ChevronDown } from 'lucide-react';
 
 import { SlideIn } from '@/components/animations/SlideIn';
 import { TextReveal } from '@/components/animations/TextReveal';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { AuroraBackground } from '@/components/ui/aurora-background';
+import { LiquidButton } from '@/components/ui/liquid-glass-button';
 import { PERSONAL_INFO } from '@/utils/constants';
 
 export function Hero() {
   return (
-    <section className='relative flex min-h-screen items-center bg-white py-20 dark:bg-black'>
-      <div
-        className={cn(
-          'absolute bottom-0 right-0 top-0 w-[65%]',
-          '[background-size:40px_40px]',
-          '[background-image:linear-gradient(to_right,#e4e4e7_1px,transparent_1px),linear-gradient(to_bottom,#e4e4e7_1px,transparent_1px)]',
-          'dark:[background-image:linear-gradient(to_right,#262626_1px,transparent_1px),linear-gradient(to_bottom,#262626_1px,transparent_1px)]'
-        )}
-      />
-      <div className='pointer-events-none absolute bottom-0 right-0 top-0 flex w-[65%] items-center justify-center bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black'></div>
+    <AuroraBackground className='py-20'>
       <div className='container relative z-10 mx-auto px-4'>
         <div className='mx-auto max-w-6xl'>
           <TextReveal>
@@ -42,28 +33,28 @@ export function Hero() {
             <div className='md:col-span-3'>
               <SlideIn delay={0.4}>
                 <p className='mb-8 text-lg leading-relaxed text-muted-foreground md:text-xl'>
-                  Building what's next in AI and fullstack. I engineer
+                  Building what's next in technology. I engineer
                   high-performance systems that deliver, whether it's spinning
-                  up a RAG system to make search smarter or integrating an LLM
-                  to power a conversation. No fluff, just solid code and real
-                  results.
+                  up a dynamic agent to handle multi-intent workflows or
+                  training a deep learning model to classify images for object
+                  detection. No fluff, just solid code and real results.
                 </p>
               </SlideIn>
 
               <SlideIn delay={0.6}>
                 <div className='flex flex-col gap-4 sm:flex-row'>
-                  <Button size='lg' asChild>
+                  <LiquidButton size='lg' asChild>
                     <a href='#work'>Curious?</a>
-                  </Button>
-                  <Button variant='outline' size='lg' asChild>
+                  </LiquidButton>
+                  <LiquidButton variant='outline' size='lg' asChild>
                     <a
                       href={PERSONAL_INFO.resumeLink}
                       target='_blank'
                       rel='noopener noreferrer'
                     >
-                      Download Resume
+                      Resume
                     </a>
-                  </Button>
+                  </LiquidButton>
                 </div>
               </SlideIn>
             </div>
@@ -89,6 +80,6 @@ export function Hero() {
           <ChevronDown size={20} />
         </motion.div>
       </motion.div>
-    </section>
+    </AuroraBackground>
   );
 }
