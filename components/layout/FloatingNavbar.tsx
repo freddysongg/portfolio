@@ -3,16 +3,17 @@
 import React, { useState } from 'react';
 
 import { motion } from 'framer-motion';
+import { Briefcase, User, Clock, Mail, FileText } from 'lucide-react';
 import { Link } from 'react-scroll';
 
 import { LiquidButton } from '@/components/ui/liquid-glass-button';
 import { PERSONAL_INFO } from '@/utils/constants';
 
 const MENU_ITEMS = [
-  { name: 'Projects', to: 'work' },
-  { name: 'About', to: 'about' },
-  { name: 'Experience', to: 'experience' },
-  { name: 'Contact', to: 'contact' },
+  { name: 'Projects', to: 'work', icon: Briefcase },
+  { name: 'About', to: 'about', icon: User },
+  { name: 'Experience', to: 'experience', icon: Clock },
+  { name: 'Contact', to: 'contact', icon: Mail },
 ] as const;
 
 export function FloatingNavbar() {
@@ -25,9 +26,10 @@ export function FloatingNavbar() {
       transition={{ duration: 0.6, delay: 0.2 }}
       className='fixed left-0 right-0 top-6 z-50 flex justify-center'
     >
-      <nav className='flex items-center gap-2 rounded-full border border-border bg-background/80 px-2 py-2 backdrop-blur-md'>
+      <nav className='flex items-center gap-2 rounded-full border border-border bg-background/80 px-2 py-2 backdrop-blur-md sm:px-4'>
         {MENU_ITEMS.map(item => {
           const isActive = activeLink === item.to;
+          const Icon = item.icon;
 
           return isActive ? (
             <LiquidButton key={item.name} variant='default' size='sm' asChild>
@@ -40,7 +42,10 @@ export function FloatingNavbar() {
                 onSetActive={() => setActiveLink(item.to)}
                 className='cursor-pointer text-sm font-medium'
               >
-                {item.name}
+                <span className='hidden sm:block'>{item.name}</span>
+                <span className='block sm:hidden'>
+                  <Icon size={18} />
+                </span>
               </Link>
             </LiquidButton>
           ) : (
@@ -52,9 +57,12 @@ export function FloatingNavbar() {
               offset={-100}
               duration={800}
               onSetActive={() => setActiveLink(item.to)}
-              className='cursor-pointer rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground'
+              className='cursor-pointer rounded-full px-2 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground sm:px-4'
             >
-              {item.name}
+              <span className='hidden sm:block'>{item.name}</span>
+              <span className='block sm:hidden'>
+                <Icon size={18} />
+              </span>
             </Link>
           );
         })}
@@ -64,8 +72,12 @@ export function FloatingNavbar() {
             href={PERSONAL_INFO.resumeLink}
             target='_blank'
             rel='noopener noreferrer'
+            className='flex items-center justify-center'
           >
-            Resume
+            <span className='hidden sm:block'>Resume</span>
+            <span className='block sm:hidden'>
+              <FileText size={18} />
+            </span>
           </a>
         </LiquidButton>
       </nav>
