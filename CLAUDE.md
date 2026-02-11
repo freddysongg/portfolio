@@ -1,6 +1,8 @@
-# CLAUDE.md
+# Claude Code Guidelines
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This document defines **non-negotiable rules** for AI-generated code. Violations mean the output is not acceptable.
+
+---
 
 ## Project Overview
 
@@ -23,6 +25,70 @@ npm run format          # Format code with Prettier
 npm run format:check    # Check code formatting
 npm run typecheck       # Run TypeScript type checking
 ```
+
+---
+
+## Code Style Rules
+
+- All code must pass `prettier` formatting — run `npm run format` before completing
+- Never create temporary variables that are not used
+- Never create redundant variables — return or use values directly
+- Never create unused constants
+- Remove variables immediately when unused
+- Do not create inline type definitions — define interfaces/types separately
+- **Always use object destructuring** when accessing object properties:
+
+  ```ts
+  // CORRECT - use destructuring
+  const { username, password } = config.opensearch;
+
+  // WRONG - do not use dot notation repeatedly
+  const username = config.opensearch.username;
+  const password = config.opensearch.password;
+  ```
+- Destructure function parameters when accessing multiple properties
+- Destructure in assignments, not just declarations
+- When imports can be shortened, always shorten them
+- Combine multiple imports from the same source
+- Always use ES2020+ JavaScript style
+- Prefer arrow functions
+- Do not rely on the `this` keyword
+- Functions must have well-defined, descriptive names
+- **Use Parameter Object Pattern** for functions with more than one argument:
+
+  ```ts
+  // CORRECT - single object with destructured named parameters
+  function createUser({ name, email, role }: CreateUserParams): User {}
+
+  // WRONG - multiple positional parameters
+  function createUser(name: string, email: string, role: string): User {}
+  ```
+- Positional parameters allowed only for trivial cases (e.g., `add(a, b)`, `Math.max(x, y)`)
+- Use default values in destructured parameters: `({ limit = 10, offset = 0 }: QueryParams = {})`
+
+---
+
+## TypeScript Rules
+
+- Never use `any`
+- All variables, parameters, and return values must be explicitly typed
+- Use `unknown` instead of `any`, then narrow with type guards
+- Never add `eslint-disable` comments — fix the issue instead
+- All functions must have explicit return types
+- Use `import type` for type-only imports
+- Use proper interfaces or types for complex objects
+- Ensure types match actual runtime data
+- When working with JSON or external data, define explicit interfaces
+- Never assume values are present — explicit null/undefined checks required
+- Avoid non-null assertions (`!`) unless accompanied by a comment explaining why it is safe
+- Prefer discriminated unions over flags or enums
+- No status objects without a discriminant field
+- All `switch` statements must be exhaustive
+- Use `never` checks to enforce exhaustiveness
+- No magic strings — use string literal unions, constants, or `const enum`
+- Always do a type check after modifications
+
+---
 
 ## Architecture
 
@@ -136,53 +202,24 @@ components/
 - `projects.ts`: Project information and metadata
 - `experience.ts`: Work experience and timeline data
 
-### Styling Patterns
+---
 
-**Utility Function** (`lib/utils.ts`):
+## Project Structure Rules
 
-```tsx
-cn(...inputs); // Merges Tailwind classes with clsx and tailwind-merge
+```
+app/                    # Next.js App Router pages and layouts
+components/
+├── animations/         # Reusable animation wrappers
+├── layout/            # Layout components (Navigation, Footer)
+├── sections/          # Page sections (Hero, Projects, About, Experience, Contact)
+└── ui/                # shadcn/ui primitive components
+data/                   # Static content data (projects, experience)
+hooks/                  # Custom React hooks
+lib/                    # Utility libraries (cn helper)
+utils/                  # Constants and shared utilities
 ```
 
-**Common Patterns**:
-
-- Backdrop blur: `backdrop-blur-md` with `bg-background/80`
-- Responsive design: Mobile-first with `md:` and `lg:` breakpoints
-- Dark mode: Use semantic color tokens (automatically switch)
-- Animations: Wrap content in `<TextReveal>` or `<SlideIn>` components
-
-**Button Variants** (via class-variance-authority):
-
-- Variants: default, destructive, outline, secondary, ghost, link
-- Sizes: default (h-10), sm (h-9), lg (h-11), icon (h-10 w-10)
-- All buttons support `asChild` prop for polymorphic rendering
-
-### Navigation Behavior
-
-**Desktop Navigation**:
-
-- Fixed position: `right-8 top-8`
-- Pill-shaped container with backdrop blur
-- Horizontal menu items + Resume button
-- Smooth scroll to sections via anchor links
-
-**Mobile Navigation**:
-
-- Toggle button: `right-6 top-6`
-- Full-screen overlay with centered menu
-- AnimatePresence for enter/exit animations
-- Staggered animation on menu items (0.1s delay each)
-
-## Key Technical Decisions
-
-1. **Next.js 14 App Router**: Server components by default, client components marked with `'use client'`
-2. **CSS Variables over Tailwind colors**: Enables easy theme switching without rebuilding
-3. **Intersection Observer animations**: Performance-friendly, triggers only when visible
-4. **Radix UI primitives**: Headless, accessible components styled with Tailwind
-5. **Framer Motion**: Declarative animations with variants pattern
-6. **Single-page layout**: All sections on one page, hash navigation
-
-## Adding New Components
+### Adding New Components
 
 When adding new UI components:
 
@@ -199,6 +236,48 @@ When creating section components:
 4. Follow mobile-first responsive design
 5. Import and add to `app/page.tsx` in desired order
 
+---
+
+## Side Effects & Cleanup Rules
+
+- Every side effect must have a corresponding cleanup (timers, listeners, subscriptions, abort controllers)
+- Never mutate function arguments — return new objects
+- Side-effecting functions must be clearly named (`fetch*`, `write*`, `send*`, etc.)
+
+---
+
+## Error Handling Rules
+
+- Never throw generic errors (`new Error("something went wrong")`)
+- Errors must include actionable context
+- `catch` blocks must:
+  - rethrow, or
+  - return a typed failure object, or
+  - explicitly document why the error is ignored
+- Never swallow errors silently
+- Never return `null` to indicate failure
+
+---
+
+## Naming Rules
+
+- No vague names: `data`, `info`, `value`, `item`, `handler`
+- Names must encode intent and domain meaning
+- Boolean variables must start with: `is`, `has`, `can`, `should`
+
+---
+
+## Performance & Safety Rules
+
+- Nested loops must include a comment explaining time complexity
+- Using `.find()` inside loops is forbidden unless the dataset is provably tiny
+- Avoid accidental O(n^2) behavior
+- Validate all external input at system boundaries
+- Do not use unsafe regex patterns that may cause ReDoS
+- Avoid nested quantifiers in regex
+
+---
+
 ## Styling Guidelines
 
 - **Colors**: Use semantic tokens (`--foreground`, not specific colors)
@@ -207,3 +286,70 @@ When creating section components:
 - **Containers**: Use `.container` class for consistent max-width and padding
 - **Animations**: Favor subtle, performance-friendly animations
 - **Dark mode**: Test both themes, avoid hard-coded colors
+- Backdrop blur: `backdrop-blur-md` with `bg-background/80`
+- Responsive design: Mobile-first with `md:` and `lg:` breakpoints
+
+**Utility Function** (`lib/utils.ts`):
+
+```tsx
+cn(...inputs); // Merges Tailwind classes with clsx and tailwind-merge
+```
+
+---
+
+## Key Technical Decisions
+
+1. **Next.js 14 App Router**: Server components by default, client components marked with `'use client'`
+2. **CSS Variables over Tailwind colors**: Enables easy theme switching without rebuilding
+3. **Intersection Observer animations**: Performance-friendly, triggers only when visible
+4. **Radix UI primitives**: Headless, accessible components styled with Tailwind
+5. **Framer Motion**: Declarative animations with variants pattern
+6. **Single-page layout**: All sections on one page, hash navigation
+
+---
+
+## Documentation & Comments
+
+- Do not comment on *what* the code does
+- Comments may only explain:
+  - why something exists
+  - why it is safe
+  - why a trade-off was chosen
+- Function length limits:
+  - Pure functions: max 30 lines
+  - Component render functions: max 50 lines
+- If a function name contains `And`, it likely violates single-responsibility
+
+---
+
+## TODO Discipline
+
+- All TODOs must include:
+  - a reason
+  - an owner or condition for removal
+- Anonymous TODOs are forbidden
+
+---
+
+## Git Rules
+
+- Never push to git
+- Only stage and commit — user pushes manually
+- Never mention AI, Claude, or automation in commit messages
+- Commit messages must be a single line, no capitalization, changes separated by commas (e.g., `"added claude.md, refactored button component, added glass ui"`)
+
+---
+
+## AI-Specific Guardrails
+
+- Never invent APIs, schemas, fields, or behavior
+- Never guess database schemas or response shapes
+- Never refactor beyond the explicitly requested scope
+- Never introduce abstractions for hypothetical future use
+- If requirements are unclear, stop and ask instead of guessing
+
+---
+
+## Final Rule
+
+If any rule conflicts with speed, convenience, or brevity — **the rule wins**.
