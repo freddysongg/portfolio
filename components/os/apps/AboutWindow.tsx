@@ -36,7 +36,10 @@ export function AboutWindow({ openApp }: AboutWindowProps): React.ReactElement {
   return (
     <div className='os-window-body padded'>
       <div className='profile-hero'>
-        <div className='avatar-pixel' />
+        <div className='avatar-pixel has-photo'>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src='/images/pfp.jpg' alt={`${name} profile photo`} />
+        </div>
         <div className='profile-meta'>
           <div className='name'>{name}</div>
           <div className='role'>{role}</div>

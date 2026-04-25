@@ -24,12 +24,12 @@ export const feedPosts: FeedPost[] = [
     total: 166,
     comments: [
       {
-        who: 'Sara K.',
+        who: 'anonymous',
         text: 'voice for shopping has been a dream demo for years — congrats on shipping!',
         when: '2d',
       },
       {
-        who: 'Marcus L.',
+        who: 'anonymous',
         text: 'sub-2s end-to-end with retrieval is wild. the latency story is the real flex.',
         when: '2d',
       },
@@ -50,7 +50,7 @@ export const feedPosts: FeedPost[] = [
     total: 71,
     comments: [
       {
-        who: 'Jess W.',
+        who: 'anonymous',
         text: 'clean fern. respect.',
         when: '4d',
       },
@@ -67,7 +67,7 @@ export const feedPosts: FeedPost[] = [
     total: 114,
     comments: [
       {
-        who: 'Dr. K. Park',
+        who: 'anonymous',
         text: 'the F1-vs-answer-quality split is the killer insight. our team chased retrieval scores for months before noticing the disconnect.',
         when: '5d',
       },
@@ -97,9 +97,9 @@ export const feedPosts: FeedPost[] = [
     reactions: { heart: 112, coffee: 28, spark: 14 },
     total: 154,
     comments: [
-      { who: 'Jess W.', text: 'reset mode activated 🏂', when: '60d' },
+      { who: 'anonymous', text: 'reset mode activated 🏂', when: '60d' },
       {
-        who: 'Tom R.',
+        who: 'anonymous',
         text: 'the conditions looked unreal this weekend',
         when: '61d',
       },

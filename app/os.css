@@ -1784,6 +1784,20 @@ body.resizing-window * {
     );
   pointer-events: none;
 }
+.avatar-pixel.has-photo {
+  image-rendering: auto;
+}
+.avatar-pixel.has-photo::before {
+  display: none;
+}
+.avatar-pixel.has-photo > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 
 .profile-meta .name {
   font-family: var(--font-ibm-plex-mono), 'IBM Plex Mono', monospace;
