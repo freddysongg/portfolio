@@ -14,18 +14,9 @@ import type {
 } from '@/components/os/types';
 import { profile } from '@/data/os/profile';
 
-const PING_SUBJECT = 'ping from freddy.os';
-const PING_BODY =
-  'caught your terminal — leaving a signal:\n\n> \n\n— sent from freddy.os';
-
 function openResume(): void {
   if (typeof window === 'undefined') return;
   window.open(profile.resume, '_blank', 'noopener,noreferrer');
-}
-
-function pingOperator(): void {
-  if (typeof window === 'undefined') return;
-  window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(PING_SUBJECT)}&body=${encodeURIComponent(PING_BODY)}`;
 }
 
 interface MenuBarProps {
@@ -88,6 +79,7 @@ export function MenuBar({
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [openEgg, setOpenEgg] = useState<EasterEggKey | null>(null);
   const [batteryBody, setBatteryBody] = useState<string>(BATTERY_BODIES[0]);
+  const [isConnectOpen, setIsConnectOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const handleClose = (event: globalThis.MouseEvent): void => {
@@ -95,6 +87,7 @@ export function MenuBar({
       if (!target?.closest(MENUBAR_SELECTOR)) {
         setOpenMenu(null);
         setOpenEgg(null);
+        setIsConnectOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClose);
@@ -171,8 +164,11 @@ export function MenuBar({
         },
         {
           kind: 'action',
-          lbl: 'Ping Operator',
-          run: pingOperator,
+          lbl: 'Slip a Note',
+          run: (): void => {
+            setIsConnectOpen(true);
+            setOpenEgg(null);
+          },
         },
       ],
     },
@@ -371,6 +367,53 @@ export function MenuBar({
           <div className='knob' />
         </button>
       </div>
+
+      {isConnectOpen ? (
+        <div
+          className='os-connect-card'
+          onClick={(event): void => event.stopPropagation()}
+        >
+          <button
+            type='button'
+            className='os-connect-close'
+            onClick={(): void => setIsConnectOpen(false)}
+            aria-label='Close'
+          >
+            ×
+          </button>
+          <div className='connect-eyebrow'>{'// Connect'}</div>
+          <div className='connect-title'>Slip me a note</div>
+          <div className='connect-body'>
+            Talk shop on a project, dig into AI infra, ask about a role, or just
+            say hi. Pick a channel below — I read everything.
+          </div>
+          <div className='connect-rows'>
+            <div className='connect-row'>
+              <span className='connect-key'>email</span>
+              <span className='connect-val'>{profile.email}</span>
+            </div>
+            <a
+              className='connect-row link'
+              href={profile.github}
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              <span className='connect-key'>github</span>
+              <span className='connect-val'>@freddysongg ↗</span>
+            </a>
+            <a
+              className='connect-row link'
+              href={profile.linkedin}
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              <span className='connect-key'>linkedin</span>
+              <span className='connect-val'>/in/freddysong ↗</span>
+            </a>
+          </div>
+          <div className='connect-tag'>● operator standing by</div>
+        </div>
+      ) : null}
     </div>
   );
 }

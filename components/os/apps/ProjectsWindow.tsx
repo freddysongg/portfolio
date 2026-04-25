@@ -64,6 +64,11 @@ export function ProjectsWindow({
             onClick={(): void => onOpenProject(p)}
           >
             <div className={`thumb ${p.thumb}`}>
+              {p.wip ? (
+                <span className='pin-wip-badge' aria-label='Work in progress'>
+                  ▲ WIP
+                </span>
+              ) : null}
               <div className='thumb-inner'>
                 <div
                   className='thumb-glyph'

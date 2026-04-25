@@ -24,12 +24,15 @@ export function ProjectDetailModal({
 }: ProjectDetailModalProps): React.ReactElement | null {
   if (!project) return null;
 
-  const { title, color, glyph, sub, cat, desc, tags, link, github } = project;
+  const { title, color, glyph, sub, cat, desc, tags, link, github, wip } =
+    project;
 
   const visitHref = link && link !== STOP_LINK ? link : STOP_LINK;
   const githubHref = github && github !== STOP_LINK ? github : STOP_LINK;
   const isVisitDisabled = visitHref === STOP_LINK;
   const isGithubDisabled = githubHref === STOP_LINK;
+  const isLive = !wip && !isVisitDisabled;
+  const isSourceOnly = !wip && isVisitDisabled;
 
   const stopPropagation = (e: ReactMouseEvent<HTMLDivElement>): void => {
     e.stopPropagation();
@@ -121,16 +124,30 @@ export function ProjectDetailModal({
           <h4>{'// Status'}</h4>
           <div className='stats-grid' style={{ marginTop: 6 }}>
             <div className='stat-cell'>
-              <div className='num'>v1.0</div>
+              <div className='num'>{wip ? 'v0.1' : 'v1.0'}</div>
               <div className='lbl'>Build</div>
             </div>
             <div className='stat-cell'>
-              <div className='num'>●</div>
-              <div className='lbl'>Live</div>
+              <div className='num'>
+                {wip ? (
+                  '◐'
+                ) : isLive ? (
+                  <span className='live-dot' aria-hidden='true' />
+                ) : (
+                  '◌'
+                )}
+              </div>
+              <div className='lbl'>
+                {wip ? 'In Progress' : isLive ? 'Live · 200' : 'Source Only'}
+              </div>
             </div>
             <div className='stat-cell'>
-              <div className='num'>MIT</div>
-              <div className='lbl'>License</div>
+              <div className='num'>
+                {wip ? 'WIP' : isSourceOnly ? '</>' : 'MIT'}
+              </div>
+              <div className='lbl'>
+                {wip ? 'Status' : isSourceOnly ? 'Repo' : 'License'}
+              </div>
             </div>
           </div>
 

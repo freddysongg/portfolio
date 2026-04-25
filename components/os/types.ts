@@ -128,6 +128,7 @@ export interface OsProject {
   color: ProjectColor;
   link: string;
   github?: string;
+  wip?: boolean;
 }
 
 export interface OsExperience {

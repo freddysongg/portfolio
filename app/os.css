@@ -190,14 +190,6 @@ body.resizing-window * {
   height: 0;
   pointer-events: none;
 }
-.os-menu-dropdown .mi .kbd {
-  color: var(--ink-mute);
-  font-size: 10px;
-}
-.os-menu-dropdown .mi:hover .kbd {
-  color: var(--paper-3);
-}
-
 .os-egg-pop {
   position: absolute;
   top: calc(100% + 12px);
@@ -241,6 +233,104 @@ body.resizing-window * {
 .os-egg-pop .egg-tag {
   display: inline-block;
   margin-top: 8px;
+  font-size: 10px;
+  color: var(--terracotta);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.os-connect-card {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 12px;
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  border-radius: 4px;
+  box-shadow: var(--shadow);
+  padding: 16px 18px 14px;
+  z-index: 99999;
+  width: 320px;
+  max-width: calc(100vw - 24px);
+  box-sizing: border-box;
+  font-family: var(--font-ibm-plex-mono), 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--ink);
+  animation: os-egg-in 0.18s ease-out;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.os-connect-close {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  line-height: 1;
+  color: var(--ink-mute);
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 2px;
+}
+.os-connect-close:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+.os-connect-card .connect-eyebrow {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-mute);
+  margin-bottom: 4px;
+}
+.os-connect-card .connect-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.os-connect-card .connect-body {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin-bottom: 12px;
+}
+.os-connect-card .connect-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-top: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+  padding: 8px 0;
+}
+.os-connect-card .connect-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 4px 0;
+  color: var(--ink);
+  text-decoration: none;
+}
+.os-connect-card .connect-row.link {
+  cursor: pointer;
+}
+.os-connect-card .connect-row.link:hover .connect-val {
+  color: var(--terracotta);
+}
+.os-connect-card .connect-key {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-mute);
+  min-width: 56px;
+}
+.os-connect-card .connect-val {
+  font-size: 12px;
+  color: var(--ink);
+  user-select: text;
+}
+.os-connect-card .connect-tag {
+  margin-top: 10px;
   font-size: 10px;
   color: var(--terracotta);
   text-transform: uppercase;
@@ -1752,6 +1842,49 @@ body.resizing-window * {
   font-weight: 700;
   color: var(--ink);
   letter-spacing: -0.02em;
+  min-height: 26px;
+  display: flex;
+  align-items: center;
+}
+.stat-cell .live-dot {
+  position: relative;
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--phosphor);
+  box-shadow: 0 0 0 2px var(--paper);
+  animation: live-dot-pulse 1.6s ease-out infinite;
+}
+.stat-cell .live-dot::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1.5px solid var(--phosphor);
+  opacity: 0.6;
+  animation: live-dot-ring 1.6s ease-out infinite;
+}
+@keyframes live-dot-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 2px var(--paper);
+  }
+  50% {
+    transform: scale(1.12);
+    box-shadow: 0 0 0 2px var(--paper);
+  }
+}
+@keyframes live-dot-ring {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2.1);
+    opacity: 0;
+  }
 }
 .stat-cell .lbl {
   font-family: var(--font-ibm-plex-mono), 'IBM Plex Mono', monospace;
@@ -1966,6 +2099,23 @@ body.resizing-window * {
 .pin .tags .os-chip {
   font-size: 9.5px;
   padding: 2px 6px;
+}
+.pin-wip-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  font-family: var(--font-ibm-plex-mono), 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  background: var(--ink);
+  color: var(--paper);
+  border: 1.5px solid var(--ink);
+  border-radius: 2px;
+  box-shadow: 2px 2px 0 0 rgba(28, 27, 24, 0.45);
 }
 
 /* ============== Timeline ============== */
