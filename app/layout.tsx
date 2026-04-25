@@ -1,31 +1,53 @@
 import { Analytics } from '@vercel/analytics/react';
-import { GeistMono } from 'geist/font/mono';
-import { GeistSans } from 'geist/font/sans';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
+
+import { IBM_Plex_Mono, Inter } from 'next/font/google';
 
 import './globals.css';
+import './os.css';
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  variable: '--font-ibm-plex-mono',
+});
 
 export const metadata: Metadata = {
-  title: "Freddy's Portfolio",
-  description: 'Experiences + Projects',
+  title: 'Freddy OS — Portfolio',
+  description: 'A desktop-OS hybrid portfolio for Freddy Song.',
   icons: {
     icon: '/favicon.ico',
   },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-  },
 };
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+};
+
+interface RootLayoutProps {
+  children: React.ReactNode;
+}
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<RootLayoutProps>): React.ReactElement {
   return (
-    <html lang='en' className={`${GeistSans.variable} ${GeistMono.variable}`}>
-      <body className={GeistSans.className}>
+    <html
+      lang='en'
+      data-theme='light'
+      data-accent='terracotta'
+      className={`${inter.variable} ${ibmPlexMono.variable}`}
+    >
+      <body>
         {children}
         <Analytics />
       </body>
