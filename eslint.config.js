@@ -40,6 +40,7 @@ const config = [
       globals: {
         React: 'readonly',
         JSX: 'readonly',
+        YT: 'readonly',
       },
       parserOptions: {
         ecmaFeatures: {
