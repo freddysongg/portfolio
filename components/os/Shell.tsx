@@ -57,29 +57,42 @@ const TerminalWindow = dynamic(
   { ssr: false }
 );
 
-const DEFAULT_OPEN: AppId[] = ['about', 'feed', 'projects'];
+const DEFAULT_OPEN: AppId[] = ['about', 'projects', 'experience'];
 const DEFAULT_ACTIVE: AppId = 'about';
 const DEFAULT_ACCENT: AccentKey = 'terracotta';
 const DEFAULT_WALLPAPER = 'dunes' as const;
 const DEFAULT_THEME: ThemeMode = 'light';
 
-const DEFAULT_GEOMS: Record<AppId, WindowGeom> = {
-  about: { x: 60, y: 60, w: 760, h: 580 },
-  projects: { x: 480, y: 90, w: 800, h: 600 },
-  experience: { x: 200, y: 130, w: 600, h: 540 },
-  feed: { x: 880, y: 80, w: 540, h: 620 },
-  finder: { x: 280, y: 160, w: 720, h: 460 },
-  music: { x: 220, y: 100, w: 680, h: 600 },
-  terminal: { x: 320, y: 180, w: 640, h: 440 },
+interface GeomPct {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+
+const APP_GEOM_PCTS: Record<AppId, GeomPct> = {
+  about: { x: 0.04, y: 0.07, w: 0.53, h: 0.64 },
+  projects: { x: 0.33, y: 0.1, w: 0.56, h: 0.67 },
+  experience: { x: 0, y: 0, w: 0, h: 0 },
+  feed: { x: 0.61, y: 0.09, w: 0.38, h: 0.69 },
+  finder: { x: 0.19, y: 0.18, w: 0.5, h: 0.51 },
+  music: { x: 0.15, y: 0.11, w: 0.47, h: 0.67 },
+  terminal: { x: 0.22, y: 0.2, w: 0.44, h: 0.49 },
 };
+
+const MIN_VIEWPORT_W = 800;
+const MIN_VIEWPORT_H = 600;
 
 const TIME_TICK_MS = 30_000;
 const NOTIFICATION_DELAY_MS = 7000;
 const NOTIFICATION_SESSION_KEY = 'freddy-os/notif-shown/v1';
-const SMALL_VIEWPORT_PX = 1280;
 const STUDIO_INITIAL_VIDEO_ID = studioTracks[0].videoId;
 const ICON_RIGHT_OFFSET = 110;
 const ICON_RIGHT_OFFSET_SECOND = 220;
+const CAREER_RIGHT_PADDING_PCT = 0.06;
+const CAREER_WIDTH_PCT = 0.4;
+const CAREER_TOP_PCT = 0.48;
+const CAREER_HEIGHT_PCT = 0.42;
 
 function formatClock(d: Date): string {
   const hh = d.getHours().toString().padStart(2, '0');
@@ -108,40 +121,42 @@ function buildBooleanFlagMap(): Record<AppId, boolean> {
   );
 }
 
-function buildSmallViewportGeoms(
-  base: Record<AppId, WindowGeom>
-): Record<AppId, WindowGeom> {
-  const w = window.innerWidth;
-  const h = window.innerHeight;
-  if (w >= SMALL_VIEWPORT_PX) return base;
+function buildCareerGeom(vw: number, vh: number): WindowGeom {
+  const careerW = Math.round(vw * CAREER_WIDTH_PCT);
+  const careerRight = Math.round(vw * (1 - CAREER_RIGHT_PADDING_PCT));
   return {
-    ...base,
-    about: {
-      x: 30,
-      y: 50,
-      w: Math.min(720, w - 60),
-      h: Math.min(560, h - 100),
-    },
-    projects: {
-      x: 60,
-      y: 80,
-      w: Math.min(740, w - 100),
-      h: Math.min(560, h - 120),
-    },
-    feed: {
-      x: 100,
-      y: 110,
-      w: Math.min(520, w - 160),
-      h: Math.min(580, h - 140),
-    },
+    x: careerRight - careerW,
+    y: Math.round(vh * CAREER_TOP_PCT),
+    w: careerW,
+    h: Math.round(vh * CAREER_HEIGHT_PCT),
   };
+}
+
+function pctToGeom(pct: GeomPct, vw: number, vh: number): WindowGeom {
+  return {
+    x: Math.round(vw * pct.x),
+    y: Math.round(vh * pct.y),
+    w: Math.round(vw * pct.w),
+    h: Math.round(vh * pct.h),
+  };
+}
+
+function buildResponsiveGeoms(): Record<AppId, WindowGeom> {
+  const vw = Math.max(MIN_VIEWPORT_W, window.innerWidth);
+  const vh = Math.max(MIN_VIEWPORT_H, window.innerHeight);
+  const result = {} as Record<AppId, WindowGeom>;
+  for (const id of Object.keys(APP_GEOM_PCTS) as AppId[]) {
+    result[id] = pctToGeom(APP_GEOM_PCTS[id], vw, vh);
+  }
+  result.experience = buildCareerGeom(vw, vh);
+  return result;
 }
 
 function buildDefaultSnapshot(): DesktopSnapshot {
   return {
     openWindows: DEFAULT_OPEN,
     activeWindow: DEFAULT_ACTIVE,
-    geoms: buildSmallViewportGeoms(DEFAULT_GEOMS),
+    geoms: buildResponsiveGeoms(),
     iconPos: buildInitialIconPositions(),
     theme: DEFAULT_THEME,
     minimized: buildBooleanFlagMap(),
@@ -153,7 +168,7 @@ function reconcileSnapshot(persisted: PersistedSnapshot): DesktopSnapshot {
   return {
     openWindows: DEFAULT_OPEN,
     activeWindow: DEFAULT_ACTIVE,
-    geoms: { ...buildSmallViewportGeoms(DEFAULT_GEOMS), ...persisted.geoms },
+    geoms: { ...buildResponsiveGeoms(), ...persisted.geoms },
     iconPos: { ...buildInitialIconPositions(), ...persisted.iconPos },
     theme: persisted.theme,
     minimized: buildBooleanFlagMap(),
