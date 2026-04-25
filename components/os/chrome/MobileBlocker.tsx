@@ -4,16 +4,10 @@ import type { ReactElement } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 
 const MOBILE_BREAKPOINT = 900;
-const DISMISS_SESSION_KEY = 'freddy-os/mobile-blocker-dismissed/v1';
 
 function isBelowBreakpoint(): boolean {
   if (typeof window === 'undefined') return false;
   return window.innerWidth < MOBILE_BREAKPOINT;
-}
-
-function readDismissed(): boolean {
-  if (typeof window === 'undefined') return false;
-  return window.sessionStorage.getItem(DISMISS_SESSION_KEY) === '1';
 }
 
 export function MobileBlocker(): ReactElement | null {
@@ -22,7 +16,6 @@ export function MobileBlocker(): ReactElement | null {
 
   useEffect(() => {
     setIsMobile(isBelowBreakpoint());
-    setIsDismissed(readDismissed());
     const handleResize = (): void => setIsMobile(isBelowBreakpoint());
     window.addEventListener('resize', handleResize);
     return (): void => window.removeEventListener('resize', handleResize);
@@ -30,9 +23,6 @@ export function MobileBlocker(): ReactElement | null {
 
   const handleDismiss = useCallback((): void => {
     setIsDismissed(true);
-    if (typeof window !== 'undefined') {
-      window.sessionStorage.setItem(DISMISS_SESSION_KEY, '1');
-    }
   }, []);
 
   if (!isMobile || isDismissed) return null;
