@@ -160,8 +160,8 @@ export const miscDocs: MiscDoc[] = [
   {
     id: 'coffee',
     title: 'Coffee Log',
-    subtitle: 'Beans, pours, and (mostly) bad latte art',
-    intro: "Tasting notes and brewing fails from this week's home setup.",
+    subtitle: 'Beans, pours, and the occasional clean fern',
+    intro: "Tasting notes and brewing wins from this week's home setup.",
     sections: [
       {
         heading: 'This week’s bag',
@@ -183,13 +183,13 @@ export const miscDocs: MiscDoc[] = [
       {
         heading: 'Latte art update',
         items: [
-          'Attempted: heart',
-          'Achieved: vague heart potato',
-          'Working theory: milk too hot, jug too far, hands too excited',
+          'Attempted: fern',
+          'Achieved: legible fern (small win, taking it)',
+          'Working theory: milk a touch cooler, pour from closer in, steady hands',
         ],
       },
     ],
-    outro: 'Pour was bad. Coffee was incredible. Net win.',
+    outro: 'Pour was clean. Coffee was incredible. Double win.',
     linkedFeedId: 'p5',
     linkedFeedLabel: 'Open the coffee post in Field Notes',
   },

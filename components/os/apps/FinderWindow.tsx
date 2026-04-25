@@ -228,7 +228,9 @@ export function FinderWindow({
                 <div className='pix-icon pix-music'>♪</div>
               ) : null}
             </div>
-            <div>{f.name}</div>
+            <div className='fi-label' title={f.name}>
+              {f.name}
+            </div>
           </div>
         ))}
       </div>

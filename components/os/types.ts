@@ -73,6 +73,12 @@ export interface FeedComment {
   when: string;
 }
 
+export interface FeedImageItem {
+  src: string;
+  label?: string;
+  objectPosition?: string;
+}
+
 export interface FeedPost {
   id: string;
   who: string;
@@ -82,6 +88,10 @@ export interface FeedPost {
   body: string;
   hasImage?: boolean;
   imgLabel?: string;
+  imgSrc?: string;
+  imgHref?: string;
+  imgObjectPosition?: string;
+  imgGallery?: FeedImageItem[];
   reactions: ReactionCounts;
   total: number;
   comments: FeedComment[];

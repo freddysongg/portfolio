@@ -1,9 +1,15 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import type { MouseEvent as ReactMouseEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
-import type { FeedPost, ReactionDef, ReactionKey } from '@/components/os/types';
+import type {
+  FeedImageItem,
+  FeedPost,
+  ReactionDef,
+  ReactionKey,
+} from '@/components/os/types';
 import { feedPosts, REACTION_TYPES } from '@/data/os/feed';
 import { profile } from '@/data/os/profile';
 
@@ -37,6 +43,117 @@ function ReactPix({ type, onClick }: ReactPixProps): React.ReactElement {
     >
       {def?.glyph}
     </span>
+  );
+}
+
+interface PostImageProps {
+  src: string;
+  label?: string;
+  href?: string;
+  objectPosition?: string;
+}
+
+function PostImage({
+  src,
+  label,
+  href,
+  objectPosition,
+}: PostImageProps): React.ReactElement {
+  const className = `post-image has-img${href ? ' linked' : ''}`;
+  const imgStyle = objectPosition ? { objectPosition } : undefined;
+  const content = (
+    <>
+      <img src={src} alt={label ?? ''} style={imgStyle} />
+      {label ? <div className='ph-label'>{label}</div> : null}
+    </>
+  );
+  if (href) {
+    return (
+      <a
+        className={className}
+        href={href}
+        target='_blank'
+        rel='noopener noreferrer'
+      >
+        {content}
+      </a>
+    );
+  }
+  return <div className={className}>{content}</div>;
+}
+
+interface PostCarouselProps {
+  items: FeedImageItem[];
+}
+
+function PostCarousel({ items }: PostCarouselProps): React.ReactElement {
+  const [index, setIndex] = useState<number>(0);
+  const total = items.length;
+  const current = items[index];
+
+  const goPrev = (e: ReactMouseEvent<HTMLButtonElement>): void => {
+    e.stopPropagation();
+    setIndex(prev => (prev - 1 + total) % total);
+  };
+  const goNext = (e: ReactMouseEvent<HTMLButtonElement>): void => {
+    e.stopPropagation();
+    setIndex(prev => (prev + 1) % total);
+  };
+  const goTo = (next: number) => (e: ReactMouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    setIndex(next);
+  };
+
+  return (
+    <div className='post-image has-img is-carousel'>
+      <div className='carousel-track'>
+        {items.map((item, i) => (
+          <img
+            key={item.src}
+            src={item.src}
+            alt={item.label ?? ''}
+            className={i === index ? 'carousel-slide active' : 'carousel-slide'}
+            style={
+              item.objectPosition
+                ? { objectPosition: item.objectPosition }
+                : undefined
+            }
+          />
+        ))}
+      </div>
+      {total > 1 ? (
+        <>
+          <button
+            type='button'
+            className='carousel-nav carousel-prev'
+            onClick={goPrev}
+            aria-label='Previous image'
+          >
+            ‹
+          </button>
+          <button
+            type='button'
+            className='carousel-nav carousel-next'
+            onClick={goNext}
+            aria-label='Next image'
+          >
+            ›
+          </button>
+          <div className='carousel-dots'>
+            {items.map((item, i) => (
+              <button
+                type='button'
+                key={item.src}
+                className={i === index ? 'carousel-dot active' : 'carousel-dot'}
+                onClick={goTo(i)}
+                aria-label={`Go to image ${i + 1}`}
+              />
+            ))}
+          </div>
+        </>
+      ) : null}
+      {current.label ? <div className='ph-label'>{current.label}</div> : null}
+    </div>
   );
 }
 
@@ -116,9 +233,22 @@ function Post({
         ))}
       </div>
       {post.hasImage ? (
-        <div className='post-image'>
-          <div className='ph-label'>{post.imgLabel}</div>
-        </div>
+        post.imgGallery && post.imgGallery.length > 0 ? (
+          <PostCarousel items={post.imgGallery} />
+        ) : post.imgSrc ? (
+          <PostImage
+            src={post.imgSrc}
+            label={post.imgLabel}
+            href={post.imgHref}
+            objectPosition={post.imgObjectPosition}
+          />
+        ) : (
+          <div className='post-image'>
+            {post.imgLabel ? (
+              <div className='ph-label'>{post.imgLabel}</div>
+            ) : null}
+          </div>
+        )
       ) : null}
       <div className='post-stats'>
         <div className='reactions-stack'>

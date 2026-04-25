@@ -44,27 +44,13 @@ export function AboutWindow({ openApp }: AboutWindowProps): React.ReactElement {
             {location} · {domain}
           </div>
           <div className='profile-actions'>
-            <button
-              type='button'
-              className='os-btn primary'
-              onClick={(): void => openApp('feed')}
-            >
-              Follow
-            </button>
-            <button
-              type='button'
-              className='os-btn'
-              onClick={(): void => openApp('terminal')}
-            >
-              Message
-            </button>
             <a
-              className='os-btn'
+              className='os-btn primary'
               href={resume}
               target='_blank'
               rel='noopener noreferrer'
             >
-              Resume.pdf
+              Follow
             </a>
           </div>
         </div>
