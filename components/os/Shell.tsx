@@ -26,6 +26,7 @@ import { ProjectsWindow } from './apps/ProjectsWindow';
 import { DesktopIcon } from './chrome/DesktopIcon';
 import { DesktopNotification } from './chrome/DesktopNotification';
 import { MenuBar } from './chrome/MenuBar';
+import { MobileBlocker } from './chrome/MobileBlocker';
 import { Taskbar } from './chrome/Taskbar';
 import { TrashBin } from './chrome/TrashBin';
 import { Wallpaper } from './chrome/Wallpaper';
@@ -83,6 +84,10 @@ const APP_GEOM_PCTS: Record<AppId, GeomPct> = {
 const MIN_VIEWPORT_W = 800;
 const MIN_VIEWPORT_H = 600;
 
+const OS_DESIGN_WIDTH = 1280;
+const OS_SCALE_MIN = 0.6;
+const OS_SCALE_MAX = 1;
+
 const TIME_TICK_MS = 30_000;
 const NOTIFICATION_DELAY_MS = 7000;
 const NOTIFICATION_SESSION_KEY = 'freddy-os/notif-shown/v1';
@@ -98,6 +103,11 @@ function formatClock(d: Date): string {
   const hh = d.getHours().toString().padStart(2, '0');
   const mm = d.getMinutes().toString().padStart(2, '0');
   return `${hh}:${mm}`;
+}
+
+function computeOsScale(viewportWidth: number): number {
+  const ratio = viewportWidth / OS_DESIGN_WIDTH;
+  return Math.min(OS_SCALE_MAX, Math.max(OS_SCALE_MIN, ratio));
 }
 
 function buildInitialIconPositions(): Record<AppId, IconPos> {
@@ -297,6 +307,16 @@ export function Shell(): React.ReactElement {
     tick();
     const id = window.setInterval(tick, TIME_TICK_MS);
     return (): void => window.clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    const applyScale = (): void => {
+      const next = computeOsScale(window.innerWidth);
+      document.documentElement.style.setProperty('--os-scale', String(next));
+    };
+    applyScale();
+    window.addEventListener('resize', applyScale);
+    return (): void => window.removeEventListener('resize', applyScale);
   }, []);
 
   const updateSnapshot = useCallback(
@@ -502,6 +522,8 @@ export function Shell(): React.ReactElement {
                 ))}
               </div>
 
+              <TrashBin />
+
               {snapshot.openWindows.map(id => {
                 const geom = snapshot.geoms[id] ?? {
                   x: 100,
@@ -558,14 +580,14 @@ export function Shell(): React.ReactElement {
           onTaskClick={handleTaskClick}
         />
 
-        <TrashBin />
-
         {detailProject ? (
           <ProjectDetailModal
             project={detailProject}
             onClose={(): void => setDetailProject(null)}
           />
         ) : null}
+
+        <MobileBlocker />
       </div>
     </StudioPlayerProvider>
   );

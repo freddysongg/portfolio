@@ -84,9 +84,10 @@
 
     --os-radius: 4px;
     --os-radius-window: 8px 8px 2px 2px;
-    --bar-h: 28px;
-    --titlebar-h: 32px;
-    --dock-h: 56px;
+    --os-scale: 1;
+    --bar-h: calc(28px * var(--os-scale));
+    --titlebar-h: calc(32px * var(--os-scale));
+    --dock-h: calc(56px * var(--os-scale));
   }
 
   [data-theme='dark'] {

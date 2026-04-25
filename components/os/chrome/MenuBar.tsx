@@ -12,6 +12,21 @@ import type {
   MenuGroup,
   ThemeMode,
 } from '@/components/os/types';
+import { profile } from '@/data/os/profile';
+
+const PING_SUBJECT = 'ping from freddy.os';
+const PING_BODY =
+  'caught your terminal — leaving a signal:\n\n> \n\n— sent from freddy.os';
+
+function openResume(): void {
+  if (typeof window === 'undefined') return;
+  window.open(profile.resume, '_blank', 'noopener,noreferrer');
+}
+
+function pingOperator(): void {
+  if (typeof window === 'undefined') return;
+  window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(PING_SUBJECT)}&body=${encodeURIComponent(PING_BODY)}`;
+}
 
 interface MenuBarProps {
   theme: ThemeMode;
@@ -26,7 +41,7 @@ type StaticEggKey = Exclude<EasterEggKey, 'battery'>;
 const STATIC_EGGS: Record<StaticEggKey, EasterEgg> = {
   logo: {
     title: 'System Info',
-    body: 'Hello, World. Built with React, lots of caffeine, and some creativity.',
+    body: 'Hello, World.',
     tag: 'v1.0 · ⌘ click around',
   },
   online: {
@@ -93,29 +108,23 @@ export function MenuBar({
         {
           kind: 'action',
           lbl: 'New Field Note',
-          kbd: '⌘N',
           run: (): void => openApp('feed'),
         },
         {
           kind: 'action',
           lbl: 'Open Finder',
-          kbd: '⌘O',
           run: (): void => openApp('finder'),
         },
         {
           kind: 'action',
           lbl: 'Open Terminal',
-          kbd: '⌘T',
           run: (): void => openApp('terminal'),
         },
         { kind: 'sep' },
         {
           kind: 'action',
-          lbl: 'Print Resume',
-          kbd: '⌘P',
-          run: (): void => {
-            if (typeof window !== 'undefined' && window.print) window.print();
-          },
+          lbl: 'Open Resume',
+          run: openResume,
         },
       ],
     },
@@ -162,8 +171,8 @@ export function MenuBar({
         },
         {
           kind: 'action',
-          lbl: 'Send Feedback',
-          run: (): void => openApp('feed'),
+          lbl: 'Ping Operator',
+          run: pingOperator,
         },
       ],
     },
@@ -272,9 +281,6 @@ export function MenuBar({
                       }}
                     >
                       <span>{entry.lbl}</span>
-                      {entry.kbd ? (
-                        <span className='kbd'>{entry.kbd}</span>
-                      ) : null}
                     </div>
                   );
                 })}

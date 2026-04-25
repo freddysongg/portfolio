@@ -194,7 +194,6 @@ export interface EasterEgg {
 export interface MenuAction {
   kind: 'action';
   lbl: string;
-  kbd?: string;
   run: () => void;
 }
 
