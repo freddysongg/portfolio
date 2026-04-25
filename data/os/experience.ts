@@ -1,0 +1,62 @@
+import type { OsExperience } from '@/components/os/types';
+
+export const osExperience: OsExperience[] = [
+  {
+    id: 'gc',
+    company: 'Guitar Center',
+    role: 'Software Engineer',
+    when: 'Aug 2025 — Present',
+    current: true,
+    desc: 'Building unified AI platforms and multi-agent orchestration serving hundreds of employees. Production RAG systems on Kubernetes.',
+    tags: ['Python', 'Neo4j', 'pgvector', 'Kubernetes', 'MCP', 'ArgoCD'],
+  },
+  {
+    id: 'fortis',
+    company: 'FORTIS Lab · USC',
+    role: 'GenAI Research Assistant',
+    when: 'Aug 2025 — Present',
+    current: true,
+    desc: 'Investigating preference-manipulation attacks across glass-box RAG architectures, evaluating retrieval poisoning across GPT-4 / Claude / Llama.',
+    tags: ['RAG', 'MLflow', 'Prompt Injection', 'Vector DBs'],
+  },
+  {
+    id: 'acel',
+    company: 'Air Climate Equity Lab · USC',
+    role: 'Deep Learning Research Assistant',
+    when: 'Jun 2025 — Aug 2025',
+    desc: 'End-to-end air-quality prediction system combining CNN-LSTM with geospatial analysis — 8M+ records, 98% accuracy on PM2.5/NO2/Ozone.',
+    tags: ['TensorFlow', 'CNN-LSTM', 'GeoPandas', 'MLflow'],
+  },
+  {
+    id: 'marqui',
+    company: 'Marqui Labs · NASA',
+    role: 'Software Engineer',
+    when: 'Mar 2025 — Nov 2025',
+    desc: 'Modernized NASA Ames public web platforms (30k+ MAU). Built transformer-based RAG search across 220k+ internal SSERVI publications.',
+    tags: ['React', 'Python', 'RAG', 'PostgreSQL', 'CSP'],
+  },
+  {
+    id: 'switchai',
+    company: 'switch.ai',
+    role: 'Founder',
+    when: 'May 2025 — Sept 2025',
+    desc: 'Built RAG architecture boosting search recall by 27%, cut hallucinations by 31%. CI-integrated Jest/LangChain test harness.',
+    tags: ['LangChain', 'pgvector', 'LangSmith', 'OWASP'],
+  },
+  {
+    id: 'blnk',
+    company: 'BLNK',
+    role: 'Software Engineer',
+    when: 'Apr 2024 — Aug 2025',
+    desc: 'Multi-stage RAG search across 3k+ SKUs. Built 90+ modular CRUD/REST endpoints with Drizzle ORM + Stripe/Shopify/Shippo integration.',
+    tags: ['Python', 'RAG', 'PostgreSQL', 'Stripe', 'Docker'],
+  },
+  {
+    id: 'tablepal',
+    company: 'TablePal',
+    role: 'Software Engineer',
+    when: 'Jul 2023 — Oct 2024',
+    desc: 'Led 6-person team. Deployed CI/CD pipeline on AWS EKS orchestrating Docker microservices behind a JWT/RBAC API gateway.',
+    tags: ['AWS EKS', 'Kubernetes', 'Jest', 'JWT', 'RBAC'],
+  },
+];
