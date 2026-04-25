@@ -20,8 +20,8 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Freddy OS — Portfolio',
-  description: 'A desktop-OS hybrid portfolio for Freddy Song.',
+  title: 'Freddy Song',
+  description: 'Portfolio',
   icons: {
     icon: '/favicon.ico',
   },
