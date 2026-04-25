@@ -1,6 +1,6 @@
 export const PERSONAL_INFO = {
   name: 'FREDDY SONG',
-  title: 'Fullstack + AI/ML Implementation',
+  title: 'Fullstack + AI/ML',
   email: 'fredsong99@gmail.com',
   linkedin: 'https://www.linkedin.com/in/freddysong/',
   github: 'https://github.com/freddysongg',

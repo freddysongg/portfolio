@@ -2,12 +2,12 @@ import type { OsProfile, OsSkills } from '@/components/os/types';
 
 export const profile: OsProfile = {
   name: 'Freddy Song',
-  role: 'Software Engineer · AI/ML Implementation',
+  role: 'Software Engineer · AI/ML',
   location: 'Los Angeles, CA',
   domain: 'freddysongg.me',
   bio: "Building what's next in technology. I engineer high-performance systems — from multi-agent orchestration to deep-learning pipelines. No fluff, just solid code and real results.",
   extra:
-    "Currently shipping AI infra at Guitar Center and researching RAG attack surfaces at USC's FORTIS Lab.",
+    "Currently shipping AI products at Guitar Center and researching RAG attack surfaces at USC's FORTIS Lab.",
   email: 'fredsong99@gmail.com',
   github: 'https://github.com/freddysongg',
   linkedin: 'https://www.linkedin.com/in/freddysong/',
