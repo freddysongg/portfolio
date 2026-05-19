@@ -95,6 +95,7 @@ export function ProjectDetailModal({
                   background: 'var(--paper)',
                   padding: 0,
                   overflow: 'hidden',
+                  borderRadius: 16,
                 }}
               >
                 <img

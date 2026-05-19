@@ -7,7 +7,7 @@ export const osProjects: OsProject[] = [
     sub: 'Top-Down Equity Research Workbench',
     cat: 'Research Pipeline · WIP',
     desc: 'Macro → sector → company → portfolio brief pipeline that treats the LLM as a judge over cited evidence, not a predictor. Knowledge graph in Postgres, verifier passes, counterfactual robustness checks, and forward paper trading to defend against training-data leakage.',
-    tags: ['Next.js', 'FastAPI', 'Postgres', 'GraphRAG', 'EDGAR', 'AI SDK'],
+    tags: ['GraphRAG', 'Postgres', 'Python'],
     glyph: 'A',
     thumb: 'tall',
     color: 'plum',

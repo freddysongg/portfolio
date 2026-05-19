@@ -77,6 +77,7 @@ export function ProjectsWindow({
                       background: 'var(--paper)',
                       padding: 0,
                       overflow: 'hidden',
+                      borderRadius: 8,
                     }}
                   >
                     <img
