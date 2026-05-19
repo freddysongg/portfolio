@@ -70,15 +70,37 @@ export function ProjectsWindow({
                 </span>
               ) : null}
               <div className='thumb-inner'>
-                <div
-                  className='thumb-glyph'
-                  style={{
-                    background: `var(--${p.color})`,
-                    color: 'var(--paper)',
-                  }}
-                >
-                  {p.glyph}
-                </div>
+                {p.iconImage ? (
+                  <div
+                    className='thumb-glyph'
+                    style={{
+                      background: 'var(--paper)',
+                      padding: 0,
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <img
+                      src={p.iconImage}
+                      alt={`${p.title} icon`}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        display: 'block',
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <div
+                    className='thumb-glyph'
+                    style={{
+                      background: `var(--${p.color})`,
+                      color: 'var(--paper)',
+                    }}
+                  >
+                    {p.glyph}
+                  </div>
+                )}
                 <div className='thumb-label'>{p.cat}</div>
               </div>
             </div>

@@ -39,6 +39,7 @@ function buildFolders(): Record<FinderFolderKey, FinderFolder> {
         glyph: p.glyph,
         color: p.color,
         project: p,
+        iconImage: p.iconImage,
       })),
     },
     work: {
@@ -214,14 +215,36 @@ export function FinderWindow({
           >
             <div className='fi-glyph'>
               {f.kind === 'app' ? (
-                <div
-                  className='pix-icon pix-app'
-                  style={{
-                    background: `var(--${f.color ?? DEFAULT_APP_COLOR})`,
-                  }}
-                >
-                  {f.glyph}
-                </div>
+                f.iconImage ? (
+                  <div
+                    className='pix-icon pix-app'
+                    style={{
+                      background: 'var(--paper)',
+                      padding: 0,
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <img
+                      src={f.iconImage}
+                      alt={`${f.name} icon`}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        display: 'block',
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <div
+                    className='pix-icon pix-app'
+                    style={{
+                      background: `var(--${f.color ?? DEFAULT_APP_COLOR})`,
+                    }}
+                  >
+                    {f.glyph}
+                  </div>
+                )
               ) : null}
               {f.kind === 'doc' ? <div className='pix-icon pix-doc' /> : null}
               {f.kind === 'music' ? (

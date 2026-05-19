@@ -139,6 +139,7 @@ export interface OsProject {
   link: string;
   github?: string;
   wip?: boolean;
+  iconImage?: string;
 }
 
 export interface OsExperience {
@@ -168,6 +169,7 @@ export interface FinderItem {
   color?: ProjectColor;
   project?: OsProject;
   miscDocId?: string;
+  iconImage?: string;
 }
 
 export type FinderFolderKey = 'projects' | 'work' | 'music' | 'photos' | 'misc';

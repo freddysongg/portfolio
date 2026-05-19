@@ -24,8 +24,19 @@ export function ProjectDetailModal({
 }: ProjectDetailModalProps): React.ReactElement | null {
   if (!project) return null;
 
-  const { title, color, glyph, sub, cat, desc, tags, link, github, wip } =
-    project;
+  const {
+    title,
+    color,
+    glyph,
+    sub,
+    cat,
+    desc,
+    tags,
+    link,
+    github,
+    wip,
+    iconImage,
+  } = project;
 
   const visitHref = link && link !== STOP_LINK ? link : STOP_LINK;
   const githubHref = github && github !== STOP_LINK ? github : STOP_LINK;
@@ -77,9 +88,34 @@ export function ProjectDetailModal({
         </div>
         <div className='body'>
           <div className='detail-hero'>
-            <div className='icon-big' style={{ background: `var(--${color})` }}>
-              {glyph}
-            </div>
+            {iconImage ? (
+              <div
+                className='icon-big'
+                style={{
+                  background: 'var(--paper)',
+                  padding: 0,
+                  overflow: 'hidden',
+                }}
+              >
+                <img
+                  src={iconImage}
+                  alt={`${title} icon`}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    display: 'block',
+                  }}
+                />
+              </div>
+            ) : (
+              <div
+                className='icon-big'
+                style={{ background: `var(--${color})` }}
+              >
+                {glyph}
+              </div>
+            )}
             <div>
               <h2 style={{ fontSize: 22, marginBottom: 2 }}>{title}</h2>
               <div
