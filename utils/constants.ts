@@ -5,7 +5,7 @@ export const PERSONAL_INFO = {
   linkedin: 'https://www.linkedin.com/in/freddysong/',
   github: 'https://github.com/freddysongg',
   resumeLink:
-    'https://drive.google.com/file/d/1MUC6A68QdIuqhaZX-dqTof9nzBOaoqb5/view?usp=sharing',
+    'https://drive.google.com/file/d/1c6mxasStYg4xHQlIaLTLsZynI4ps5Esp/view?usp=sharing',
   domain: 'freddysongg.me',
 };
 
