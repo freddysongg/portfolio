@@ -1,5 +1,5 @@
-import { Shell } from '@/components/os/Shell';
+import { Landing } from '@/components/sections/Landing';
 
 export default function Home(): React.ReactElement {
-  return <Shell />;
+  return <Landing />;
 }
